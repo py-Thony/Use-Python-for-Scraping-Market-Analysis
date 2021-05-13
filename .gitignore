@@ -118,7 +118,7 @@ dmypy.json
 # Ignore all local history of files
 .history
 
-.env
+git rm -r -n .env
 
 forest.jpg
 # End of https://www.gitignore.io/api/python,visualstudiocode
