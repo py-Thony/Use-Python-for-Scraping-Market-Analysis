@@ -119,6 +119,6 @@ dmypy.json
 .history
 
 git rm -r -n env
-
+git rm -r -n venv
 forest.jpg
 # End of https://www.gitignore.io/api/python,visualstudiocode
