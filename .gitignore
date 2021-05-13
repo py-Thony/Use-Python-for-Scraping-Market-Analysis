@@ -150,6 +150,6 @@ Thumbs.db
 .prof
 
 # VScode
-.vscode/
+.vscode2/
 
 # End of https://www.toptal.com/developers/gitignore/api/python
