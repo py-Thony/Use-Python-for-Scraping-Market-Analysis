@@ -30,6 +30,7 @@ response = requests.get(myUrl)
 # préparation de la soupe HTML
 pageSoup = soup(response, "lxml")
 
+balisesTd = pageSoup.find_all()
 """
 h1 donne le nom en clair
 h2 donne 
