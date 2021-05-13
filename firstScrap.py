@@ -14,17 +14,23 @@ en utilisant la commande pip
 # Après avoir installé ces packages avec succès, 
 # la prochaine chose à faire est d'importer les packages           
 from bs4 import BeautifulSoup as soup 
-from urllib.request import urlopen as uReq 
+import requests
 
 
+# Toutes les futures opérations auront besoin
+# d'une URL à connecter pour l'interroger.
 myUrl="http://books.toscrape.com/catalogue/" + \
       "a-light-in-the-attic_1000/index.html"
 
-uClient = uReq(myUrl) 
-pageHtml = uClient.read()
+# Définition de l'outil de récolte d'URL
+response = requests.get(myUrl)
 
-uClient.close() 
-pageSoup = soup(pageHtml, "html.parser")
 
-productInformation = pageSoup.find("div", {"class" : "col-sm-6 product_main"})
-print(productInformation)
+# Une fois tous les ingrédients en place,
+# préparation de la soupe HTML
+pageSoup = soup(response, "lxml")
+
+"""
+h1 donne le nom en clair
+h2 donne 
+"""

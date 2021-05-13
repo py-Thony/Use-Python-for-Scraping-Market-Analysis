@@ -42,7 +42,7 @@ while scrappingInCourse:
         iw += 1
         
         for reslt in container[iw]:
-            print(soup.prettify(reslt))
+            #print(soup.prettify(reslt))
             input()
             name = container[iw].find("div", {"class": "_4rR01T"})
             price = container[iw].find("div", {"class": "_30jeq3"})
