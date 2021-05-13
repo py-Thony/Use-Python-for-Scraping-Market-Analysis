@@ -149,5 +149,7 @@ Thumbs.db
 # profiling data
 .prof
 
+# VScode
+.vscode
 
 # End of https://www.toptal.com/developers/gitignore/api/python
