@@ -1,8 +1,11 @@
 # Projet2_web_scraping
 Using Python Basics for Market Analysis   //  Utilisation des bases de Python pour l'analyse de marché
 
+README en cours de rédaction...
 
-Markdown Cheatsheet<a name="TOP"></a>
+
+
+Mémo de rappel d'une construction soignée Markdown<a name="TOP"></a>
 ===================
 
 SOURCE: https://github.com/tchapi/markdown-cheatsheet
