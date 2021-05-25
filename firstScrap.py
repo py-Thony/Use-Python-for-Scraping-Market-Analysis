@@ -95,6 +95,7 @@ Nous pouvons maintenant enregistrer notre résultat dans un fichier CSV
 -> 'with open' permet la fermeture dynamique alors que 'open' nous force
           à fermer le fichier manuellement, causant des erreurs si oubli
 -> 'w' indique le mode 'write' pour écrire ou écraser le fichier
+   'r+' permet lecture + écriture
 -> 'as' pour associer le nom du fichier à une variable plus simple à utiliser
 """
 
