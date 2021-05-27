@@ -99,7 +99,7 @@ Nous pouvons maintenant enregistrer notre résultat dans un fichier CSV
 -> 'as' pour associer le nom du fichier à une variable plus simple à utiliser
 """
 
-with open('firstScrap.csv', 'r+') as fileCSV:
+with open('firstScrap.csv', 'w') as fileCSV:
       fileCSV = csv.writer(fileCSV,delimiter=",",quotechar='"')
       # Indication de mise en page (séparation par des ',')
       # '\' permet de couper une ligne sans incidence sur le code
