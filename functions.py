@@ -13,9 +13,10 @@ and only starts the various functions.
 # Statements importations
 import requests                        # Get url
 from bs4 import BeautifulSoup as soup  # Parse result
+from PIL import Image
 
 
-def scrapLinksOfCategories(url, anteUrlCategories):
+def scrapLinksOfCategories(websiteUrl, baseUrlCategories):
     """
     Function used to retrieve the links of the categories 
     and return a list containing these links.
@@ -29,8 +30,8 @@ def scrapLinksOfCategories(url, anteUrlCategories):
           the name of the category and its link
     """
 
-    response = requests.get(url)
-    categoriesSoup = soup(response.text, "html.parser")
+    categoriesResponse = requests.get(websiteUrl)
+    categoriesSoup = soup(categoriesResponse.text, "html.parser")
     linksOfCategories = [] 
     linkIncrementation = 3 # 1st link != 1st position
 
@@ -47,17 +48,17 @@ def scrapLinksOfCategories(url, anteUrlCategories):
 
             # The name of the category being part of the link, 
             # we extract it directly in the form of a character string
-            catName = \
+            categoryName = \
                 str(link).split("/")[-2].split("_")[-2]
             
             # Add reconstituted link in the list
             linksOfCategories.append\
-                ((catName, (anteUrlCategories + link)))
+                ((categoryName, (baseUrlCategories + link)))
             linkIncrementation += 1
    
     return linksOfCategories
 
-def scrapLinksOfBooks(categoryLink, anteUrlBooks):
+def scrapLinksOfBooks(categoryLink, baseUrlBooks):
     """Function used to retrieve the links of the books 
     and return a list containing these  links.
     
@@ -129,7 +130,7 @@ def scrapLinksOfBooks(categoryLink, anteUrlBooks):
             # The base URL is added to the result
             # to reconstruct an absolute URL
             # before being added to our links list
-            bookLink = anteUrlBooks + save[3]
+            bookLink = baseUrlBooks + save[3]
             booksLinksInOneCategory.append(bookLink)
 
             allBooksIteration += 1
@@ -140,7 +141,7 @@ def scrapLinksOfBooks(categoryLink, anteUrlBooks):
     return booksLinksInOneCategory
 
 
-def scrapBookInformations(linkOfBook, stateOfheader):
+def scrapBookInformations(linkOfBook, stateOfheader=True):
     
     myUrl = linkOfBook
 
@@ -168,28 +169,28 @@ def scrapBookInformations(linkOfBook, stateOfheader):
         """
         # Le code UPC (Nom de balise ('th') et valeur ('td'))
         if 'UPC' in balise.find('th'):
-                upcName = balise.find('th')
-                upc = balise.find('td')
+            upcName = balise.find('th')
+            upc = balise.find('td')
         # le type de produit
         if 'Product Type' in balise.find('th'):
-                productTypeName = balise.find('th')
-                productType = balise.find('td')
+            productTypeName = balise.find('th')
+            productType = balise.find('td')
         # Le prix hors taxes
         if 'Price (excl. tax)' in balise.find('th'):
             priceExclTaxName = balise.find('th')
             priceExclTax = balise.find('td')
         # Le prix TTC
         if 'Price (incl. tax)' in balise.find('th'):
-                priceInclTaxName = balise.find('th')
-                priceInclTax = balise.find('td')
+            priceInclTaxName = balise.find('th')
+            priceInclTax = balise.find('td')
         # Le montant de la taxe seule
         if 'Tax' in balise.find('th'):
-                taxesName = balise.find('th')
-                taxes = balise.find('td')
+            taxesName = balise.find('th')
+            taxes = balise.find('td')
         # Si c'est en stock et combien en stock
         if 'Availability' in balise.find('th'):
-                availabilityName = balise.find('th')
-                availability = balise.find('td')
+            availabilityName = balise.find('th')
+            availability = balise.find('td')
 
     # Nous pouvons ainsi afficher nos informations
     print('Titre livre:', nameOfBook.text)
@@ -242,3 +243,31 @@ def WriteToTextFile(
     except FileNotFoundError:
         print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
         return False
+
+
+def saveImageWithPillow(linkOfBook, originalFormat="jpg", outputFormat="jpg"):
+    """This function retrieves the image by pointing to its URL, 
+    provides the name of the image 
+    and saves it in the format requested on output.
+
+    The choice to use the Pillow library stems from 
+    a comparison of the available libraries leading to think 
+    that it is the easiest to use.
+    """
+    responseImage = requests.get(linkOfBook)
+
+    # Parsing of the query result
+    soupImage = soup(responseImage.text, "html.parser")
+    
+    imageUrl = soupImage.find(
+            "div", {"class": "col-sm-6 product_main"})
+    image_url = "https://www.python.org/static/community_logos/python-logo-master-v3-TM.png"
+    img_data = requests.get(image_url).content
+    with open('IMAGES/image_name.jpg', 'wb') as handler:
+        handler.write(img_data)
+
+    input("yyyyyy")
+    currentBookImage = Image.open(imageUrl)
+    currentBookImage.save("Contour_lunettes.png")
+
+    return currentBookImage
