@@ -30,8 +30,8 @@ def scrapLinksOfCategories(websiteUrl, baseUrlCategories):
           the name of the category and its link
     """
 
-    categoriesResponse = requests.get(websiteUrl)
-    categoriesSoup = soup(categoriesResponse.text, "html.parser")
+    responseCategories = requests.get(websiteUrl)
+    categoriesSoup = soup(responseCategories.text, "html.parser")
     linksOfCategories = [] 
     linkIncrementation = 3 # 1st link != 1st position
 
@@ -71,10 +71,10 @@ def scrapLinksOfBooks(categoryLink, baseUrlBooks):
         - Returns a list of tuples: (catName, links of books)
 
     """
-    responseCategory = requests.get(categoryLink)
+    responseOneCategory = requests.get(categoryLink)
 
     # Parsing of the query result
-    soupCategory = soup(responseCategory.text, "html.parser")
+    soupCategory = soup(responseOneCategory.text, "html.parser")
     numberExpectedResults = \
         soupCategory.find(
             "form",
@@ -114,23 +114,22 @@ def scrapLinksOfBooks(categoryLink, baseUrlBooks):
 
             # Selection of the link targeted 
             # by the incrementation in the soupCategory
-            bookLink = \
+            bookLinkLarge = \
                 soupCategory.find_all(
                     "li", {"class": "col-xs-6 col-sm-4 col-md-3 col-lg-3"}
                                 )[booksIterationInPage]
 
             # Specify search by targeting 'a' (href link)
-            bookLink = bookLink.find('a')
-
-            trunq = str(bookLink).split('"')
-            # We get: ../../../name_of_book/index.html (trunq[1])
-            save = str(trunq[1]).split('../')
-            # We get: name_of_book/index.html (save[3])
+            bookLinkMedium = bookLinkLarge.find('a')
+            bookLinkSmall = str(bookLinkMedium).split('"')
+            # We get: ../../../name_of_book/index.html (bookLinkSmall[1])
+            bookLinkFinal = str(bookLinkSmall[1]).split('../')
+            # We get: name_of_book/index.html (bookLinkFinal[3])
 
             # The base URL is added to the result
             # to reconstruct an absolute URL
             # before being added to our links list
-            bookLink = baseUrlBooks + save[3]
+            bookLink = baseUrlBooks + bookLinkFinal[3]
             booksLinksInOneCategory.append(bookLink)
 
             allBooksIteration += 1
@@ -140,26 +139,36 @@ def scrapLinksOfBooks(categoryLink, baseUrlBooks):
 
     return booksLinksInOneCategory
 
+def scrapImageOfBook(linkOfImage, nameOfBook):
+    myUrl = linkOfImage
 
-def scrapBookInformations(linkOfBook, stateOfheader=True):
+    # Définition de l'outil de récolte d'URL
+    response = requests.get(myUrl, timeout=300)
+    # Une fois tous les ingrédients en place,
+    # préparation de la soupe HTML
+    with open(f'IMAGES\{nameOfBook}.jpg', 'wb') as imageBook:
+        imageBook.write(response)
+
+
+def scrapBookInformations(linkOfBook, stateOfheader):
     
     myUrl = linkOfBook
 
     # Définition de l'outil de récolte d'URL
-    response = requests.get(myUrl)
-
+    response = requests.get(myUrl, timeout=300)
     # Une fois tous les ingrédients en place,
     # préparation de la soupe HTML
-    pageSoup = soup(response.text, "lxml")
-
+    pageSoup = soup(response.text, "html.parser")
     # Le code HTML indique que le nom est 
     # contenu dans la balise 'h1'
     nameOfBook = pageSoup.find('h1')
-
     # En inspectant le code HTML, nous constatons
     # que les infos recherchées sont dans une balise 'tr'
     # Nous ciblons donc les occurences correspondant à 'tr'
     balisesTr = pageSoup.find_all('tr')
+
+    # Nous pouvons ainsi afficher nos informations
+    print('Titre livre:', nameOfBook.text)
 
     # Nous itérons les sous-balises pour récupérer
     # ce que nous cherchons
@@ -171,29 +180,46 @@ def scrapBookInformations(linkOfBook, stateOfheader=True):
         if 'UPC' in balise.find('th'):
             upcName = balise.find('th')
             upc = balise.find('td')
+            #print(upcName)
+            #print(upc)
         # le type de produit
         if 'Product Type' in balise.find('th'):
             productTypeName = balise.find('th')
             productType = balise.find('td')
+            #print(productTypeName)
+            #print(productType)
         # Le prix hors taxes
         if 'Price (excl. tax)' in balise.find('th'):
             priceExclTaxName = balise.find('th')
             priceExclTax = balise.find('td')
+            #print(priceExclTaxName)
+            #print(priceExclTax)
         # Le prix TTC
         if 'Price (incl. tax)' in balise.find('th'):
             priceInclTaxName = balise.find('th')
             priceInclTax = balise.find('td')
+            #print(priceInclTaxName)
+            #print(priceInclTax)
         # Le montant de la taxe seule
         if 'Tax' in balise.find('th'):
             taxesName = balise.find('th')
             taxes = balise.find('td')
+            #print(taxesName)
+            #print(taxes)
         # Si c'est en stock et combien en stock
         if 'Availability' in balise.find('th'):
             availabilityName = balise.find('th')
             availability = balise.find('td')
+            #print(availabilityName)
+            #print(availability)
+    ImageSoup = soup(response.text, "html.parser")
+    imageUrl = ImageSoup.find("div", {"class": "item active"}).find("img")
+    trunq = str(imageUrl).split('"')
+    # We get: ../../../media/cache/foo/bar/img.jpg (trunq[3])
+    save = str(trunq[3]).split('../')
+    # We get: media/cache/foo/bar/img.jpg (save[2])
+    imageUrl = 'http://books.toscrape.com/' + save[2]
 
-    # Nous pouvons ainsi afficher nos informations
-    print('Titre livre:', nameOfBook.text)
     # create header if 1st book
     if stateOfheader:
         currentBook = \
@@ -203,14 +229,16 @@ def scrapBookInformations(linkOfBook, stateOfheader=True):
                         {priceExclTaxName.text},\
                             {priceInclTaxName.text},\
                                 {taxesName.text},\
-                                    {availabilityName.text}\n"\
+                                    {availabilityName.text},\
+                                        'URL Of Image', \n",\
             f"{nameOfBook.text},\
                 {upc.text},\
                     {productType.text.replace('Books', ' Livres')},\
                         {priceExclTax.text.replace('Â£', ' £ ')},\
                             {priceInclTax.text.replace('Â£', ' £ ')},\
                                 {taxes.text.replace('Â£', '£ ')},\
-                                    {availability.text}\n"
+                                    {availability.text},\
+                                        {imageUrl}", "\n"
     else:
         currentBook = \
             f"{nameOfBook.text},\
@@ -219,8 +247,8 @@ def scrapBookInformations(linkOfBook, stateOfheader=True):
                         {priceExclTax.text.replace('Â£', ' £ ')},\
                             {priceInclTax.text.replace('Â£', ' £ ')},\
                                 {taxes.text.replace('Â£', '£ ')},\
-                                    {availability.text}\n"
-
+                                    {availability.text},\
+                                        {imageUrl}", "\n"
     return currentBook
 
 def WriteToTextFile(
@@ -243,31 +271,3 @@ def WriteToTextFile(
     except FileNotFoundError:
         print(f"\nLe fichier {Path}{FileName} n'existe pas.\n")
         return False
-
-
-def saveImageWithPillow(linkOfBook, originalFormat="jpg", outputFormat="jpg"):
-    """This function retrieves the image by pointing to its URL, 
-    provides the name of the image 
-    and saves it in the format requested on output.
-
-    The choice to use the Pillow library stems from 
-    a comparison of the available libraries leading to think 
-    that it is the easiest to use.
-    """
-    responseImage = requests.get(linkOfBook)
-
-    # Parsing of the query result
-    soupImage = soup(responseImage.text, "html.parser")
-    
-    imageUrl = soupImage.find(
-            "div", {"class": "col-sm-6 product_main"})
-    image_url = "https://www.python.org/static/community_logos/python-logo-master-v3-TM.png"
-    img_data = requests.get(image_url).content
-    with open('IMAGES/image_name.jpg', 'wb') as handler:
-        handler.write(img_data)
-
-    input("yyyyyy")
-    currentBookImage = Image.open(imageUrl)
-    currentBookImage.save("Contour_lunettes.png")
-
-    return currentBookImage

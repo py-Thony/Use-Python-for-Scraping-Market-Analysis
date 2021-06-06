@@ -21,11 +21,11 @@ the messages intended for the user will be in French.
 
 # import statements
 import csv
+import time
 
-from functions import scrapLinksOfCategories
+from functions import WriteToTextFile, scrapImageOfBook, scrapLinksOfCategories
 from functions import scrapLinksOfBooks
 from functions import scrapBookInformations
-from functions import saveImageWithPillow
 
 
 websiteUrl = 'http://books.toscrape.com/index.html'
@@ -34,27 +34,25 @@ websiteUrl = 'http://books.toscrape.com/index.html'
 baseUrlCategories = 'http://books.toscrape.com/'
 # To rebuild the relative links of books
 baseUrlBooks = 'http://books.toscrape.com/catalogue/'
-
 # Retrieving all category links
 linksOfCategories = scrapLinksOfCategories(websiteUrl, baseUrlCategories)
 # Peeling links
 for oneCategory in linksOfCategories:
+    stateOfHeader = True
     # Defining names and links separately
     categoryName = oneCategory[0]
     categoryLink = oneCategory[1]
     # Retrieving all book links for the current category
     linksOfBooksInOneCategory = scrapLinksOfBooks(categoryLink, baseUrlBooks)
-    
-    ## Déclaration du nouveau fichier CSV
-    # Créer une nouvelle image: Image.new( mode, taille, couleur )
-
+    time.sleep(0.5)
+    headers = 0
     # Peeling links in current category
     for linkOfBook in linksOfBooksInOneCategory:
+        headers += 1
+        if headers > 1:
+            stateOfHeader = False
         # Retrieving information from the book
-        currentBookInfo = scrapBookInformations(linkOfBook)
-        # Saving the image in the images folder 
-        # using the name of the book as a reference
-        currentBookImage = saveImageWithPillow(linkOfBook)
-        # Adding the new line to the CSV file being edited
-        ## Ajout de la nouvelle ligne au fichier CSV en cours
-
+        currentBookInfo = scrapBookInformations(linkOfBook, stateOfHeader)
+        time.sleep(0.5)
+        
+        WriteToTextFile("", f"{categoryName}.csv", f"{currentBookInfo}\n", "a")
