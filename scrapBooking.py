@@ -12,7 +12,7 @@ dans un dossier séparé.
 # Importations des modules nécessaires #
 ########################################
 
-# Module de captation d'URLs
+# Module d'interaction avec le système d'exploitation
 import os
 # module de requêtes URL
 import requests
