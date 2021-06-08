@@ -14,8 +14,6 @@ dans un dossier séparé.
 
 # Module d'interaction avec le système d'exploitation
 import os
-# module de requêtes URL
-import requests
 # Module de parsage HTML en langage humain
 from bs4 import BeautifulSoup as Soup
 # Module de gestion du temps pour espacer les requêtes
