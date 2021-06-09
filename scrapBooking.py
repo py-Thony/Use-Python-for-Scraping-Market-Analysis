@@ -25,7 +25,7 @@ import csv
 # Importation des fonctions personnelles #
 ##########################################
 
-from scrapBookingFunctions import scrapLinksOfCategories
+from scrapBookingFunctions import CreateFolder, scrapLinksOfCategories
 from scrapBookingFunctions import scrapLinksOfBooks
 from scrapBookingFunctions import scrapBookInformations
 from scrapBookingFunctions import scrapAndSaveBookImage
@@ -55,18 +55,17 @@ les liens et de les lister selon leur catégorie respective
 
 Nous utiliserons donc une simple boucle for
 """
-i = 0
+
 allBooksLinksList = []
+
 for oneCategory in linksOfCategories:
-    i += 1
-    if i < 2:
-        # Defining names and links separately
-        categoryName = oneCategory[0]
-        print(categoryName)
-        categoryLink = oneCategory[1]
-        # Retrieving all book links for the current category
-        allBooksLinksList.append(
-            (categoryName, scrapLinksOfBooks(categoryLink, baseUrlBooks)))
+    # Defining names and links separately
+    categoryName = oneCategory[0]
+    print(categoryName)
+    categoryLink = oneCategory[1]
+    # Retrieving all book links for the current category
+    allBooksLinksList.append(
+        (categoryName, scrapLinksOfBooks(categoryLink, baseUrlBooks)))
 
 """ A ce stade nous disposons d'une liste générale
 contenant une sous-liste par catégorie.
@@ -78,44 +77,49 @@ Chaque sous-liste se présente sous forme d'un tuple,
 # Il s'agit maitenant d'éplucher notre liste, et de passer une
 # requête par lien de livre, et d'enregistrer le résultat avant de passer
 # à la catégorie suivante
+RootDir = os.path.dirname(os.path.abspath(__file__))
 fields=[
     'Book Title','UPC Code','Product Type', 'Price (ExclTax)', 
-    'Price (InclTax)', 'Taxes', 'availability', 'Image Url']
+    'Price (InclTax)', 'Taxes', 'Availability', 'Image Url']
+countBooks = 0
 for linksOfBookInOneCategory in allBooksLinksList:
+
     categoryName = linksOfBookInOneCategory[0]
-    try:
-        os.makedirs(f"SCRAPED_FILES/{categoryName}\CSV_FILES")
-        os.chdir(f"SCRAPED_FILES/{categoryName}")
-        os.mkdir("IMAGES")
-        os.chdir("Projet2_web_scraping")
-    except:
-        pass
-    with open(
-        f"SCRAPED_FILES/{categoryName}\CSV_FILES\{categoryName}.csv",
-        'w', 
-        newline=''
-        ) as csvfile:
 
-        spamwriter = csv.writer(csvfile, delimiter=',',
-                        quotechar=';', quoting=csv.QUOTE_MINIMAL)
-        spamwriter.writerow(fields)
+    CSVpath = f"{RootDir}\\SCRAPED_FILES\\{categoryName}\\CSV_FILES\\"
+    imagePath = f"{RootDir}\\SCRAPED_FILES\\{categoryName}\\IMAGES\\"
+    CreateFolder(CSVpath)
+    CreateFolder(imagePath)
 
+    listOfInfoForOneBook = []
+    listOfallBooksInfo = []
     for bookLink in linksOfBookInOneCategory[1]:
+        countBooks += 1
+        print(countBooks)
         # Retrieving information from the book
         imageUrl, currentBookInfo = scrapBookInformations(bookLink)
-        print(currentBookInfo)
-
-        input(imageUrl)
-        with open(
-            f"SCRAPED_FILES/{categoryName}\CSV_FILES\{categoryName}.csv",
-                            'a', encoding="utf-8", newline='') as csvfile:
-
-            spamwriter = csv.writer(csvfile, delimiter=',',
-                                quotechar=' ', quoting=csv.QUOTE_MINIMAL)
-            spamwriter.writerow(currentBookInfo)
+        listOfallBooksInfo.append(list(currentBookInfo))
 
         time.sleep(0.5)
 
         currentBookImage = scrapAndSaveBookImage(
-                                imageUrl, categoryName, currentBookInfo[0])
+            imagePath, imageUrl, currentBookInfo[0])
+    with open(
+        f"{CSVpath}{categoryName}.csv",
+        'w',
+        encoding="utf-8",
+        newline=''
+        ) as csvfile:
+
+        spamwriter = csv.writer(
+            csvfile,
+            delimiter=',',
+            quotechar=' ',
+            quoting=csv.QUOTE_MINIMAL
+            )
     
+        spamwriter.writerow(fields)
+        spamwriter.writerows(listOfallBooksInfo)
+        print("-------------------------")
+        print("ENREGISTRMENT CSV TERMINE")
+        print("-------------------------")
