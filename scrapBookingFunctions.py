@@ -20,7 +20,6 @@ import time
 # Module de gestion du format CSV
 import csv
 
-
 def scrapLinksOfCategories(websiteUrl, baseUrlCategories):
     """
     Function used to retrieve the links of the categories 
@@ -144,9 +143,9 @@ def scrapLinksOfBooks(categoryLink, baseUrlBooks):
 
     return booksLinksInOneCategory
 
-
 def scrapBookInformations(linkOfBook):
-    
+    specialChars = "!@#$%^&\"*[];,./<>?\|~-=_+"
+
     myUrl = linkOfBook
 
     # Définition de l'outil de récolte d'URL
@@ -156,14 +155,21 @@ def scrapBookInformations(linkOfBook):
     pageSoup = Soup(response.text, "html.parser")
     # Le code HTML indique que le nom est 
     # contenu dans la balise 'h1'
-    nameOfBook = pageSoup.find('h1')
+    nameOfBook = pageSoup.find('h1').text
+    for specialChar in specialChars:
+        nameOfBook = nameOfBook.replace(specialChar, " ")
+
+    nameOfBook = nameOfBook.split("(")[0]
+    nameOfBook = ' '.join(nameOfBook.split())
+
     # En inspectant le code HTML, nous constatons
     # que les infos recherchées sont dans une balise 'tr'
     # Nous ciblons donc les occurences correspondant à 'tr'
     balisesTr = pageSoup.find_all('tr')
 
     # Nous pouvons ainsi afficher nos informations
-    print('Titre livre:', nameOfBook.text)
+    print('Titre livre:', nameOfBook)
+
 
     # Nous itérons les sous-balises pour récupérer
     # ce que nous cherchons
@@ -214,7 +220,7 @@ def scrapBookInformations(linkOfBook):
     save = str(trunq[3]).split('../')
     imageUrl = 'http://books.toscrape.com/' + save[2]
 
-    currentBookInfo = (f"{nameOfBook.text}",
+    currentBookInfo = (f"{nameOfBook}",
     f"{upc.text}",
     f"{productType.text.replace('Books', 'Livres')}",
     f"{priceExclTax.text.replace('Â£', '£')}",
@@ -224,7 +230,18 @@ def scrapBookInformations(linkOfBook):
 
     return imageUrl, currentBookInfo
 
-def scrapAndSaveBookImage(imageUrl, categoryName, nameOfBook):
+def scrapAndSaveBookImage(path, imageUrl, nameOfBook):
     responseImage = requests.get(imageUrl)
-    with open(f"SCRAPED_FILES/{categoryName}\IMAGES\{nameOfBook}.jpg", "wb") as imageBook:
+    nameOfBook = ' '.join(nameOfBook.split(':'))
+    nameOfBook = nameOfBook.replace("'", "-")
+    with open(f"{path}{nameOfBook}.jpg", "wb") as imageBook:
         imageBook.write(responseImage.content)
+
+def CreateFolder(path):
+    """
+    """
+    try: 
+        os.makedirs(path)
+        return True
+    except FileExistsError:
+        return False
