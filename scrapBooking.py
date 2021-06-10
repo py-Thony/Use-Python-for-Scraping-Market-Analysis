@@ -100,7 +100,7 @@ for linksOfBookInOneCategory in allBooksLinksList:
         imageUrl, currentBookInfo = scrapBookInformations(bookLink)
         listOfallBooksInfo.append(list(currentBookInfo))
 
-        time.sleep(0.5)
+        #time.sleep(0.5)
 
         currentBookImage = scrapAndSaveBookImage(
             imagePath, imageUrl, currentBookInfo[0])
