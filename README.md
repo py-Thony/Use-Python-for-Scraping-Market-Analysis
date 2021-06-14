@@ -30,15 +30,16 @@ _This script is responsible for scraping the site www.books.toscrape.com_
 
 __CONCEPTION:__
 
-Step 1: Extraction of URLS from each category and listing.
+:point_right:__Step 1:__ Extraction of URLS from each category and listing.
 
-Step 2: Peel this list to scrape all book links
+:point_right:__Step 2:__ Peel this list to scrape all book links
         and generate tuples listing (category name, [link list])
 
-Step 3: Query each book link to:
+:point_right:__Step 3:__ Query each book link to:
                     - Extraction of textual information
                     - Download the image of the book
-Step 3bis: Creation of self-named parent files according to the name of the category,
+
+:point_right:__Step 3bis:__ Creation of self-named parent files according to the name of the category,
             Creation of 'CSV' and 'IMAGES' child folders
             Saving text data to a CSV file in the CSV folder
             Saving images renamed with the title of the book in the IMAGES folder
