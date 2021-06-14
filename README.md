@@ -2,9 +2,9 @@
 
 ## Creation of the virtual environment
 Official python documentation:
-    - [Named link](https://docs.python.org/fr/3/library/venv.html "Python3 venv docs")
+    - [Python3 venv docs](https://docs.python.org/fr/3/library/venv.html "Documentation for creating and using a virtual environment to work free from version conflicts.")
 VScode specific documentation:
-    - [Named link](https://code.visualstudio.com/docs/python/environments "VScode venv docs")
+    - [VScode venv docs](https://code.visualstudio.com/docs/python/environments "Documentation for creating and using a virtual environment to work free from version conflicts.")
 
 
 ### Heading 3 ###
