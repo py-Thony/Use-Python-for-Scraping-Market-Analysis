@@ -27,10 +27,10 @@ TREE:
 scrapBooking.py >>> general operation of the program and settings
 scrapBookingFuncions.py >>> repetitive routines passed as functions to call.
 
-GENERATION OF FILES AND FILES:
+GENERATION OF FOLDERS AND FILES:
 parent folder with the category name
     -> Child folder named CSV
-        -> finchier.csv with the name of the category
+        -> file.csv with the name of the category
     -> Child folder named IMAGES
         -> saving images in JPG format and renamed with the title of the book
 
@@ -71,7 +71,7 @@ links_of_categories = scrap_links_of_categories(
 
 all_books_links_list = []
 for one_category in links_of_categories:
-    # Gestion du cas particuliers des catégories à plusieurs pages
+    # Management of the special case of categories with several pages
     provisional_links_list = []
 
     next_page = 1
@@ -115,17 +115,12 @@ for one_category in links_of_categories:
             category_name,
             provisional_links_list))
 
+""" At this stage we have a general list
+containing a sublist per category.
 
-""" A ce stade nous disposons d'une liste générale
-contenant une sous-liste par catégorie.
-
-Chaque sous-liste se présente sous forme d'un tuple,
-(nomCat, (listeliensLivres))
+Each sublist is in the form of a tuple,
+(catName, (booksListen))
 """
-
-# Il s'agit maitenant d'éplucher notre liste, et de passer une
-# requête par lien de livre, et d'enregistrer le résultat avant de passer
-# à la catégorie suivante
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 FIELDS=[
     'Book Title','UPC Code','Product Type', 
