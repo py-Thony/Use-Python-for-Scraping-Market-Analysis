@@ -13,14 +13,13 @@ les différentes routines du script principal
 import os
 # Module de captation d'URLs
 import requests
+import time
 # Module de parsage HTML en langage humain
 from bs4 import BeautifulSoup as Soup
-# Module de gestion du temps pour espacer les requêtes
-import time
-# Module de gestion du format CSV
-import csv
+from math import ceil
 
-def scrapLinksOfCategories(websiteUrl, baseUrlCategories):
+
+def scrap_links_of_categories(WEBSITE_URL, BASE_URL_CATEGORIES):
     """
     Function used to retrieve the links of the categories 
     and return a list containing these links.
@@ -34,35 +33,74 @@ def scrapLinksOfCategories(websiteUrl, baseUrlCategories):
           the name of the category and its link
     """
 
-    responseCategories = requests.get(websiteUrl)
-    categoriesSoup = Soup(responseCategories.text, "html.parser")
-    linksOfCategories = [] 
-    linkIncrementation = 3 # 1st link != 1st position
+    response_categories = requests.get(WEBSITE_URL)
+    categories_soup = Soup(response_categories.text, "html.parser")
+    links_of_categories = [] 
+    link_incrementation = 3 # 1st link != 1st position
+    PAGINATION_MAX = 20
 
 
-    for link in categoriesSoup:
-        # (Start at 3 + 49 categories == 52)
-        while linkIncrementation < 52:
+    for link in categories_soup:
+
+        # (Start at 3, 49 categories == 51 links, stop at 52)
+        while link_incrementation < 4:
 
             # Looking for all the anchors 'a'
             # targeting the next one on each round of the loop
-            link= categoriesSoup.find_all('a')[linkIncrementation]
+            link= categories_soup.find_all('a')[link_incrementation]
             # Specify search by targeting 'href'
             link = link['href']
 
             # The name of the category being part of the link, 
             # we extract it directly in the form of a character string
-            categoryName = \
+            category_name = \
                 str(link).split("/")[-2].split("_")[-2]
-            
-            # Add reconstituted link in the list
-            linksOfCategories.append\
-                ((categoryName, (baseUrlCategories + link)))
-            linkIncrementation += 1
-   
-    return linksOfCategories
+            print(category_name)
 
-def scrapLinksOfBooks(categoryLink, baseUrlBooks):
+            category_link = BASE_URL_CATEGORIES + link
+            # Add reconstituted link in the list
+            print(category_link)
+
+            response_one_category = requests.get(category_link)
+            # Parsing of the query result
+            soup_category = Soup(response_one_category.text, "html.parser")
+            number_expected_results = \
+                soup_category.find(
+                    "form",
+                    {"class": "form-horizontal"}
+                            ).find(
+                                {"strong": "/strong"}
+                            ).text
+
+            number_expected_results = int(number_expected_results)
+            number_of_pages = ceil(number_expected_results / PAGINATION_MAX)
+            print(
+                f" LIVRES CONTENUS:\
+                    {number_expected_results}\n",
+                f"PAGES A SCANNER:\
+                    {number_of_pages}\n",
+                f"DIVISION DE CONTRÔLE:\
+                    {number_expected_results / PAGINATION_MAX}",
+                "\n")
+            
+
+            links_of_categories.append(
+                                (
+                                    category_name,
+                                    category_link, 
+                                    number_expected_results,
+                                    number_of_pages
+                                )
+                                    )
+
+            link_incrementation += 1
+   
+    return links_of_categories
+
+def scrap_links_of_books(category_link, BASE_URL_BOOKS, nb_books_to_scan):
+    if nb_books_to_scan >= 20:
+        nb_books_to_scan = 20
+
     """Function used to retrieve the links of the books 
     and return a list containing these  links.
     
@@ -75,169 +113,136 @@ def scrapLinksOfBooks(categoryLink, baseUrlBooks):
         - Returns a list of tuples: (catName, links of books)
 
     """
-    responseOneCategory = requests.get(categoryLink)
+    book_links_in_one_page = []
+    books_iteration_in_page = 0
+
+    response_one_category = requests.get(category_link)
 
     # Parsing of the query result
-    soupCategory = Soup(responseOneCategory.text, "html.parser")
-    numberExpectedResults = \
-        soupCategory.find(
-            "form",
-            {"class": "form-horizontal"}
-                    ).find(
-                        {"strong": "/strong"}
-                    ).text
+    soup_category = Soup(response_one_category.text, "html.parser")
 
-    booksLinksInOneCategory = []
-    nextPage = 1    # Iteration of URL's
 
-    allBooksIteration = 0
-    booksIterationInPage = 0
-    numberExpectedResults = int(numberExpectedResults)
-
-    for bookLink in soupCategory:
-        """ The url changes depending on whether 
-        we query the first page or the following ones.
-        We must provide for 2 scenarios:
-            - page1 which increments and changes URLs
-            - following pages which only change page number
-        """
-        while allBooksIteration < numberExpectedResults:
-
-            if booksIterationInPage > 19: # 0-19 => 20 results.
-                nextPage += 1
-                if nextPage == 2:
-                    categoryLink = categoryLink.replace(
-                        "index.html",
-                        f"page-{nextPage}.html")
-                else:
-                    categoryLink = categoryLink.replace(
-                        f"page-{nextPage-1}.html",
-                        f"page-{nextPage}.html")
-
-                booksIterationInPage = 0
-
-            # Selection of the link targeted 
-            # by the incrementation in the soupCategory
-            bookLinkLarge = \
-                soupCategory.find_all(
+    for book_link in soup_category:
+        # Selection of the link targeted 
+        # by the incrementation in the soupCategory
+        while books_iteration_in_page < nb_books_to_scan :
+            book_link_large = \
+                soup_category.find_all(
                     "li", {"class": "col-xs-6 col-sm-4 col-md-3 col-lg-3"}
-                                )[booksIterationInPage]
+                                )[books_iteration_in_page]
 
             # Specify search by targeting 'a' (href link)
-            bookLinkMedium = bookLinkLarge.find('a')
-            bookLinkSmall = str(bookLinkMedium).split('"')
+            book_link_medium = book_link_large.find('a')
+            book_link_small = str(book_link_medium).split('"')
             # We get: ../../../name_of_book/index.html (bookLinkSmall[1])
-            bookLinkFinal = str(bookLinkSmall[1]).split('../')
+            book_link_final = str(book_link_small[1]).split('../')
             # We get: name_of_book/index.html (bookLinkFinal[3])
 
             # The base URL is added to the result
             # to reconstruct an absolute URL
             # before being added to our links list
-            bookLink = baseUrlBooks + bookLinkFinal[3]
-            booksLinksInOneCategory.append(bookLink)
+            book_link = BASE_URL_BOOKS + book_link_final[3]
+            book_links_in_one_page.append(book_link)
 
-            allBooksIteration += 1
-            booksIterationInPage += 1
-            # The function is reset on each call, 
-            # so there is no need to reset 'nextPage'
+            books_iteration_in_page += 1
+        
+    return book_links_in_one_page
 
-    return booksLinksInOneCategory
+def scrap_book_informations(link_of_book, image_path):
+    SPECIAL_CHARS = "!@#$%^&\"*[];,./<>?\|~-=_+"
 
-def scrapBookInformations(linkOfBook):
-    specialChars = "!@#$%^&\"*[];,./<>?\|~-=_+"
-
-    myUrl = linkOfBook
+    my_url = link_of_book
 
     # Définition de l'outil de récolte d'URL
-    response = requests.get(myUrl, timeout=300)
+    response = requests.get(my_url, timeout=300)
     # Une fois tous les ingrédients en place,
     # préparation de la soupe HTML
-    pageSoup = Soup(response.text, "html.parser")
+    page_soup = Soup(response.text, "html.parser")
+
     # Le code HTML indique que le nom est 
     # contenu dans la balise 'h1'
-    nameOfBook = pageSoup.find('h1').text
-    for specialChar in specialChars:
-        nameOfBook = nameOfBook.replace(specialChar, " ")
+    name_of_book = page_soup.find('h1').text
+    for special_char in SPECIAL_CHARS:
+        name_of_book = name_of_book.replace(special_char, " ")
 
-    nameOfBook = nameOfBook.split("(")[0]
-    nameOfBook = ' '.join(nameOfBook.split())
+    # Handling of the special case where the name begins with a parenthesis
 
-    # En inspectant le code HTML, nous constatons
-    # que les infos recherchées sont dans une balise 'tr'
-    # Nous ciblons donc les occurences correspondant à 'tr'
-    balisesTr = pageSoup.find_all('tr')
+    if name_of_book[0] != "(":
+        name_of_book = name_of_book.split("(")[0]
+    else:
+        print("Cas particulier, les '(' et ')' sont conservées")
+    
+    # TOTAL removal of spaces and redistribution with ONE space.
+    name_of_book = ' '.join(name_of_book.split())
 
-    # Nous pouvons ainsi afficher nos informations
-    print('Titre livre:', nameOfBook)
+    balises_tr = page_soup.find_all('tr')
+    print('Titre livre:', name_of_book)
 
 
     # Nous itérons les sous-balises pour récupérer
     # ce que nous cherchons
-    for balise in balisesTr:
+    for balise in balises_tr:
         """La méthode choisie est un peu répétitive mais
         elle permet de comprendre précisément ce qui est ciblé
         """
         # Le code UPC (Nom de balise ('th') et valeur ('td'))
         if 'UPC' in balise.find('th'):
-            upcName = balise.find('th')
             upc = balise.find('td')
-            #print(upcName)
-            #print(upc)
         # le type de produit
         if 'Product Type' in balise.find('th'):
-            productTypeName = balise.find('th')
-            productType = balise.find('td')
-            #print(productTypeName)
-            #print(productType)
+            product_type = balise.find('td')
         # Le prix hors taxes
         if 'Price (excl. tax)' in balise.find('th'):
-            priceExclTaxName = balise.find('th')
-            priceExclTax = balise.find('td')
-            #print(priceExclTaxName)
-            #print(priceExclTax)
+            price_excl_tax = balise.find('td')
         # Le prix TTC
         if 'Price (incl. tax)' in balise.find('th'):
-            priceInclTaxName = balise.find('th')
-            priceInclTax = balise.find('td')
-            #print(priceInclTaxName)
-            #print(priceInclTax)
+            price_incl_tax = balise.find('td')
         # Le montant de la taxe seule
         if 'Tax' in balise.find('th'):
-            taxesName = balise.find('th')
             taxes = balise.find('td')
-            #print(taxesName)
-            #print(taxes)
         # Si c'est en stock et combien en stock
         if 'Availability' in balise.find('th'):
-            availabilityName = balise.find('th')
             availability = balise.find('td')
-            #print(availabilityName)
-            #print(availability)
+        # Si c'est en stock et combien en stock
+        if 'Number of reviews' in balise.find('th'):
+            number_of_reviews = balise.find('td')
+    star_rating = page_soup.find('article', {'class':'product_pod'}).find('p')
+    # Split of 'p tag' and split result to obtain needed value
+    nb_of_stars = str(star_rating).split('"')[1].split(' ')[1]
 
-    imageUrl = pageSoup.find("div", {"class": "item active"}).find("img")
+
+    imageUrl = page_soup.find("div", {"class": "item active"}).find("img")
     trunq = str(imageUrl).split('"')
     # We get: ../../../media/cache/foo/bar/img.jpg (trunq[3])
     save = str(trunq[3]).split('../')
     imageUrl = 'http://books.toscrape.com/' + save[2]
 
-    currentBookInfo = (f"{nameOfBook}",
+    currentBookInfo = (f"{name_of_book}",
     f"{upc.text}",
-    f"{productType.text.replace('Books', 'Livres')}",
-    f"{priceExclTax.text.replace('Â£', '£')}",
-    f"{priceInclTax.text.replace('Â£', '£')}",
+    f"{product_type.text}",
+    f"{price_excl_tax.text.replace('Â£', '£')}",
+    f"{price_incl_tax.text.replace('Â£', '£')}",
     f"{taxes.text.replace('Â£', '£')}",
-    f"{availability.text}", imageUrl)
-
+    f"{availability.text}",
+    f"{number_of_reviews.text}",
+    nb_of_stars,
+    imageUrl)
+    print("Informations récupérées")
+    scrap_and_save_book_image(
+        image_path,
+        imageUrl,
+        name_of_book)
+    print("Image téléchargée")
     return imageUrl, currentBookInfo
 
-def scrapAndSaveBookImage(path, imageUrl, nameOfBook):
+def scrap_and_save_book_image(path, imageUrl, nameOfBook):
     responseImage = requests.get(imageUrl)
     nameOfBook = ' '.join(nameOfBook.split(':'))
     nameOfBook = nameOfBook.replace("'", "-")
     with open(f"{path}{nameOfBook}.jpg", "wb") as imageBook:
         imageBook.write(responseImage.content)
 
-def CreateFolder(path):
+def create_folder(path):
     """
     """
     try: 
