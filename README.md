@@ -1,13 +1,16 @@
 <div align="center">
 
 # Using Python Basics for Market Analysis
-
 </div>
 
 <p align="center">
   <img width="200" src="https://user.oc-static.com/upload/2020/09/22/1600779540759_Online%20bookstore-01.png" alt="Material Bread logo">
 </p>
 
+<div align="center">
+
+___A program (a scraper) developed in Python, capable of extracting price information from other online bookstores.___
+</div>
 
 ## Creation of the virtual environment
 Official python documentation:
