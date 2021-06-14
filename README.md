@@ -14,6 +14,9 @@ __To start the installation automatically:__
 ```bash
 pip install -r requirements.txt
 ```
+>Version Of libraries
+>>The versions are indicated from the day of creation but you can update them
+
 
 # Description of the program
 The program consists of 2 files:
