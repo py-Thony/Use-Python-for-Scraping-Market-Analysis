@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 """
-This script is responsible for querying the site www.books.toscrape.com
+This script is responsible for scraping the site www.books.toscrape.com
 
 CONCEPTION:
 Step 1: Extraction of URLS from each category and listing.
 
 Step 2: Peel this list to scrape all book links
-        and general tuples listing (category name, [link list])
+        and generate tuples listing (category name, [link list])
 
 Step 3: Query each book link to:
                     - Extraction of textual information
@@ -19,7 +19,7 @@ Step 3bis: Creation of self-named parent files according to the name of the cate
 
 Having problems controlling where to create folders,
 (under Windows 10 machine, VScode) it was necessary to create a function.
-'CreateFolder' and define the Path manually.
+'create_folder' and define the Path manually.
 Encountering particular cases in the titles of books, it was necessary
 to manage these exceptions by replacing certain symbols. (eg: commas <!> CSV)
 
