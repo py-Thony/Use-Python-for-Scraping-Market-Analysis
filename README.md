@@ -1,23 +1,11 @@
-# Projet2_web_scraping
-Using Python Basics for Market Analysis   //  Utilisation des bases de Python pour l'analyse de marché
+# Using Python Basics for Market Analysis   //  Utilisation des bases de Python pour l'analyse de marché
 
-README en cours de rédaction...
+## Creation of the virtual environment
+Official python documentation:
+    - [Named link](https://docs.python.org/fr/3/library/venv.html "Python3 venv docs")
+VScode specific documentation:
+    - [Named link](https://code.visualstudio.com/docs/python/environments "VScode venv docs")
 
-
-
-Mémo de rappel d'une construction soignée Markdown<a name="TOP"></a>
-===================
-
-SOURCE: https://github.com/tchapi/markdown-cheatsheet
-
-- - - - 
-# Heading 1 #
-
-    Markup :  # Heading 1 #
-
-## Heading 2 ##
-
-    Markup :  ## Heading 2 ##
 
 ### Heading 3 ###
 
