@@ -1,7 +1,9 @@
 # Using Python Basics for Market Analysis
 
+<p align="center">
+  <img width="200" src="https://user.oc-static.com/upload/2020/09/22/1600779540759_Online%20bookstore-01.png" alt="Material Bread logo">
+</p>
 
-![picture alt](https://user.oc-static.com/upload/2020/09/22/1600779540759_Online%20bookstore-01.png){: .center-image }
 
 ## Creation of the virtual environment
 Official python documentation:
