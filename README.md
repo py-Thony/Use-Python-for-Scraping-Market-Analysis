@@ -11,7 +11,7 @@ VScode specific documentation:
 _A requirements.txt file allows you to find out the list of libraries necessary for the proper functioning of the program._
 
 __To start the installation automatically:__
->Version Of libraries
+>Version Of libraries (Python3)
 >>The versions are indicated from the day of creation but you can update them
 ```bash
 pip install -r requirements.txt
@@ -28,10 +28,8 @@ _This script is responsible for scraping the site www.books.toscrape.com_
 <details>
   <summary>_Read More_</summary>
   <p>
-  
-This script is responsible for scraping the site www.books.toscrape.com
 
-CONCEPTION:
+__CONCEPTION:__
 Step 1: Extraction of URLS from each category and listing.
 
 Step 2: Peel this list to scrape all book links
@@ -45,17 +43,11 @@ Step 3bis: Creation of self-named parent files according to the name of the cate
             Saving text data to a CSV file in the CSV folder
             Saving images renamed with the title of the book in the IMAGES folder
 
-Having problems controlling where to create folders,
-(under Windows 10 machine, VScode) it was necessary to create a function.
-'create_folder' and define the Path manually.
-Encountering particular cases in the titles of books, it was necessary
-to manage these exceptions by replacing certain symbols. (eg: commas <!> CSV)
-
-TREE:
+__TREE:__
 scrapBooking.py >>> general operation of the program and settings
 scrapBookingFuncions.py >>> repetitive routines passed as functions to call.
 
-GENERATION OF FOLDERS AND FILES:
+__GENERATION OF FOLDERS AND FILES:__
 parent folder with the category name
     -> Child folder named CSV
         -> file.csv with the name of the category
@@ -101,6 +93,8 @@ for the sake of readability
 </p>
 </details>
 
+
+<span style="color:blue">some *blue* text</span>
     Markup :  #### Heading 4 ####
 
 
