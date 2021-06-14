@@ -21,8 +21,10 @@ pip install -r requirements.txt
 # Description of the program
 The program consists of 2 files:
 
-        :arrow_forward: scrapBooking.py
-        
+:arrow_forward:
+
+scrapBooking.py
+
         :arrow_forward: scrapBookingFunctions.py
 
 ___scrapBooking.py___
