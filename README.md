@@ -22,6 +22,7 @@ pip install -r requirements.txt
 The program consists of 2 files:
 
 :one:___scrapBooking.py___
+
 _This script is responsible for scraping the site www.books.toscrape.com_
 <details>
   <summary>_Read More_</summary>
@@ -56,6 +57,7 @@ parent folder with the category name
 
 
 :two:___scrapBookingFunctions.py___
+
 _This file groups together the functions created to manage the different routines of the main script_
 <details>
   <summary>_Read More_</summary>
