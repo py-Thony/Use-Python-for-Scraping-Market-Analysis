@@ -20,8 +20,10 @@ pip install -r requirements.txt
 
 # Description of the program
 The program consists of 2 files:
-        - scrapBooking.py
-        - scrapBookingFunctions.py
+
+        :arrow_forward: scrapBooking.py
+        
+        :arrow_forward: scrapBookingFunctions.py
 
 ___scrapBooking.py___
 _This script is responsible for scraping the site www.books.toscrape.com_
@@ -94,7 +96,6 @@ for the sake of readability
 </details>
 
 
-<span style="color:blue">some *blue* text</span>
 
 
     Markup :  #### Heading 4 ####
