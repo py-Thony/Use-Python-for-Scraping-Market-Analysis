@@ -8,7 +8,6 @@ VScode specific documentation:
     - [VScode venv docs](https://code.visualstudio.com/docs/python/environments "Documentation for creating and using a virtual environment to work free from version conflicts.")
 
 ## requirements.txt
-
 _A requirements.txt file allows you to find out the list of libraries necessary for the proper functioning of the program._
 
 __To start the installation automatically:__
@@ -16,11 +15,17 @@ __To start the installation automatically:__
 pip install -r requirements.txt
 ```
 
-### Heading 3 ###
+# Description of the program
+The program consists of 2 files:
+        - scrapBooking.py
+        - scrapBookingFunctions.py
 
-    Markup :  ### Heading 3 ###
+___scrapBooking.py___
+_This script is responsible for scraping the site www.books.toscrape.com_
 
-#### Heading 4 ####
+___scrapBookingFunctions.py___
+_This file groups together the functions created 
+to manage the different routines of the main script_
 
     Markup :  #### Heading 4 ####
 
