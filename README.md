@@ -29,6 +29,7 @@ _This script is responsible for scraping the site www.books.toscrape.com_
   <p>
 
 __CONCEPTION:__
+
 Step 1: Extraction of URLS from each category and listing.
 
 Step 2: Peel this list to scrape all book links
@@ -42,11 +43,9 @@ Step 3bis: Creation of self-named parent files according to the name of the cate
             Saving text data to a CSV file in the CSV folder
             Saving images renamed with the title of the book in the IMAGES folder
 
-__TREE:__
-scrapBooking.py >>> general operation of the program and settings
-scrapBookingFuncions.py >>> repetitive routines passed as functions to call.
 
 __GENERATION OF FOLDERS AND FILES:__
+
 parent folder with the category name
     -> Child folder named CSV
         -> file.csv with the name of the category
@@ -63,13 +62,13 @@ _This file groups together the functions created to manage the different routine
   <summary>_Read More_</summary>
   <p>
 
-__scrap_links_of_categories__
+:arrow_right:__scrap_links_of_categories__
 Function used to retrieve the links of the categories.
 
-__scrap_links_of_books__
+:arrow_right:__scrap_links_of_books__
 Function used to retrieve the links of the books.
 
-__scrap_book_informations__
+:arrow_right:__scrap_book_informations__
 This function retrieves the following information:
     - Book name
     - UPC code
@@ -81,10 +80,10 @@ This function retrieves the following information:
     - the url of the image
 And download the images.
 
-__scrap_and_save_book_image__
+:arrow_right:__scrap_and_save_book_image__
 Function used to download the image of each book.
 
-__create_folder__
+:arrow_right:__create_folder__
 Function used only to manage
 a possible error during file access, 
 the path settings are deliberately 
