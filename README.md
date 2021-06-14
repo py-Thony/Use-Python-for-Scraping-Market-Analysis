@@ -46,11 +46,11 @@ Step 3bis: Creation of self-named parent files according to the name of the cate
 
 __GENERATION OF FOLDERS AND FILES:__
 
-parent folder with the category name
-    - Child folder named CSV
-        - file.csv with the name of the category
-    - Child folder named IMAGES
-        - saving images in JPG format and renamed with the title of the book
+___Parent folder___ with the category name
+- ___Child folder___ named CSV
+    - File.csv with the name of the category
+- ___Child folder___ named IMAGES
+    - Saving images in JPG format and renamed with the title of the book
 </p>
 </details>
 
