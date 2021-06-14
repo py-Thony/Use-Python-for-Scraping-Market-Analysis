@@ -1,4 +1,4 @@
-# Using Python Basics for Market Analysis   //  Utilisation des bases de Python pour l'analyse de marché
+# Using Python Basics for Market Analysis
 
 ## Creation of the virtual environment
 Official python documentation:
