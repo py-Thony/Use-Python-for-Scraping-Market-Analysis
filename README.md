@@ -39,10 +39,10 @@ __CONCEPTION:__
                     - Extraction of textual information
                     - Download the image of the book
 
-:point_right:__Step 3bis:__ Creation of self-named parent files according to the name of the category,
-            Creation of 'CSV' and 'IMAGES' child folders
-            Saving text data to a CSV file in the CSV folder
-            Saving images renamed with the title of the book in the IMAGES folder
+:point_right:__Step 3bis:__ Creation of self-named parent files according to the name of the category:
+* Creation of 'CSV' and 'IMAGES' child folders
+* Saving text data to a CSV file in the CSV folder
+* Saving images renamed with the title of the book in the IMAGES folder
 
 
 __GENERATION OF FOLDERS AND FILES:__
