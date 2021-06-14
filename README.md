@@ -58,7 +58,8 @@ parent folder with the category name
     -> Child folder named CSV
         -> file.csv with the name of the category
     -> Child folder named IMAGES
-        -> saving images in JPG format and renamed with the title of the book</p>
+        -> saving images in JPG format and renamed with the title of the book
+</p>
 </details>
 
 ___scrapBookingFunctions.py___
