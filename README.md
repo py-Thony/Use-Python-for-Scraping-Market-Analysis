@@ -1,6 +1,7 @@
 # Using Python Basics for Market Analysis
 
-![picture alt](https://user.oc-static.com/upload/2020/09/22/1600779540759_Online%20bookstore-01.png "Title is optional")
+
+![picture alt](https://user.oc-static.com/upload/2020/09/22/1600779540759_Online%20bookstore-01.png#center "Title is optional")
 
 ## Creation of the virtual environment
 Official python documentation:
