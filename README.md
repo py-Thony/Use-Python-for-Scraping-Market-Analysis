@@ -63,12 +63,15 @@ _This file groups together the functions created to manage the different routine
   <p>
 
 :arrow_right:__scrap_links_of_categories__
+
 Function used to retrieve the links of the categories.
 
 :arrow_right:__scrap_links_of_books__
+
 Function used to retrieve the links of the books.
 
 :arrow_right:__scrap_book_informations__
+
 This function retrieves the following information:
     - Book name
     - UPC code
@@ -81,9 +84,11 @@ This function retrieves the following information:
 And download the images.
 
 :arrow_right:__scrap_and_save_book_image__
+
 Function used to download the image of each book.
 
 :arrow_right:__create_folder__
+
 Function used only to manage
 a possible error during file access, 
 the path settings are deliberately 
