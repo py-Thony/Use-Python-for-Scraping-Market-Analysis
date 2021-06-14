@@ -7,7 +7,7 @@ CONCEPTION:
 Step 1: Extraction of URLS from each category and listing.
 
 Step 2: Peel this list to scrape all book links
-        and general tuples listing (category name, [link list])
+        and generate tuples listing (category name, [link list])
 
 Step 3: Query each book link to:
                     - Extraction of textual information
