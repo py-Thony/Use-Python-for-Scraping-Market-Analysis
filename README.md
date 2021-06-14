@@ -1,5 +1,8 @@
+<p align="center">
 
 # Using Python Basics for Market Analysis
+
+</p>
 
 <p align="center">
   <img width="200" src="https://user.oc-static.com/upload/2020/09/22/1600779540759_Online%20bookstore-01.png" alt="Material Bread logo">
