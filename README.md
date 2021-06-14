@@ -11,11 +11,11 @@ VScode specific documentation:
 _A requirements.txt file allows you to find out the list of libraries necessary for the proper functioning of the program._
 
 __To start the installation automatically:__
+>Version Of libraries
+>>The versions are indicated from the day of creation but you can update them
 ```bash
 pip install -r requirements.txt
 ```
->Version Of libraries
->>The versions are indicated from the day of creation but you can update them
 
 
 # Description of the program
@@ -25,10 +25,75 @@ The program consists of 2 files:
 
 ___scrapBooking.py___
 _This script is responsible for scraping the site www.books.toscrape.com_
+<details>
+  <summary>_Read More_</summary>
+  <p>This script is responsible for scraping the site www.books.toscrape.com
+
+CONCEPTION:
+Step 1: Extraction of URLS from each category and listing.
+
+Step 2: Peel this list to scrape all book links
+        and generate tuples listing (category name, [link list])
+
+Step 3: Query each book link to:
+                    - Extraction of textual information
+                    - Download the image of the book
+Step 3bis: Creation of self-named parent files according to the name of the category,
+            Creation of 'CSV' and 'IMAGES' child folders
+            Saving text data to a CSV file in the CSV folder
+            Saving images renamed with the title of the book in the IMAGES folder
+
+Having problems controlling where to create folders,
+(under Windows 10 machine, VScode) it was necessary to create a function.
+'create_folder' and define the Path manually.
+Encountering particular cases in the titles of books, it was necessary
+to manage these exceptions by replacing certain symbols. (eg: commas <!> CSV)
+
+TREE:
+scrapBooking.py >>> general operation of the program and settings
+scrapBookingFuncions.py >>> repetitive routines passed as functions to call.
+
+GENERATION OF FOLDERS AND FILES:
+parent folder with the category name
+    -> Child folder named CSV
+        -> file.csv with the name of the category
+    -> Child folder named IMAGES
+        -> saving images in JPG format and renamed with the title of the book</p>
+</details>
 
 ___scrapBookingFunctions.py___
-_This file groups together the functions created 
-to manage the different routines of the main script_
+_This file groups together the functions created to manage the different routines of the main script_
+<details>
+  <summary>_Read More_</summary>
+  <p>__scrap_links_of_categories__
+    Function used to retrieve the links of the categories.
+
+    __scrap_links_of_books__
+    Function used to retrieve the links of the books.
+
+    __scrap_book_informations__
+    This function retrieves the following information:
+        - Book name
+        - UPC code
+        - Type of product
+        - Price (with and without tax, and tax only)
+        - The availability
+        - the number of comments
+        - the star rating
+        - the url of the image
+    And download the images.
+
+    __scrap_and_save_book_image__
+    Function used to download the image of each book.
+
+    __create_folder__
+    Function used only to manage
+    a possible error during file access, 
+    the path settings are deliberately 
+    processed in the same place as the calls 
+    for the sake of readability
+</p>
+</details>
 
     Markup :  #### Heading 4 ####
 
