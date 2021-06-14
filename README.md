@@ -82,14 +82,14 @@ Function used to retrieve the links of the books.
 :arrow_right:__scrap_book_informations__
 
 This function retrieves the following information:
-    - Book name
-    - UPC code
-    - Type of product
-    - Price (with and without tax, and tax only)
-    - The availability
-    - the number of comments
-    - the star rating
-    - the url of the image
+- Book name
+- UPC code
+- Type of product
+- Price (with and without tax, and tax only)
+- The availability
+- the number of comments
+- the star rating
+- the url of the image
 And download the images.
 
 :arrow_right:__scrap_and_save_book_image__
