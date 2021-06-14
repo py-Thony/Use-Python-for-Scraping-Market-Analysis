@@ -1,118 +1,119 @@
 # -*- coding: utf-8 -*-
 
 """
-Ce script se charge d'interroger le site www.books.toscrape.com
+This script is responsible for querying the site www.books.toscrape.com
 
 CONCEPTION:
-Etape 1: Extraction des URLS de chaque catégorie et mise en liste.
+Step 1: Extraction of URLS from each category and listing.
 
-Etape 2: Epluchage de cette liste pour scraper tous les liens de livre
-        et mise en liste générale de tuples (nom catégorie, [liste liens])
+Step 2: Peel this list to scrape all book links
+        and general tuples listing (category name, [link list])
 
-Etape 3: Interrogation de chaque lien de livre pour:
-                    - Extraction des informations textuelles
-                    - Téléchargement de l'image du livre
-Etape 3bis: Création de dossiers parents auto-nommés selon le nom de la catégorie,
-            Création de dossiers enfants 'CSV' et 'IMAGES'
-            Enregistrement des données textuelles dans un fichier CSV dans le dossier CSV
-            Enregistrement des images renommées avec le titre du livre dans le dossier IMAGES
+Step 3: Query each book link to:
+                    - Extraction of textual information
+                    - Download the image of the book
+Step 3bis: Creation of self-named parent files according to the name of the category,
+            Creation of 'CSV' and 'IMAGES' child folders
+            Saving text data to a CSV file in the CSV folder
+            Saving images renamed with the title of the book in the IMAGES folder
 
-Rencontrant des problèmes de contrôle de l'endroit où créer les dossiers,
-(sous machine Windows10, VScode) il à été nécessaire de créer une fonction
-'CreateFolder' et de définir le Path manuellement.
+Having problems controlling where to create folders,
+(under Windows 10 machine, VScode) it was necessary to create a function.
+'CreateFolder' and define the Path manually.
+Encountering particular cases in the titles of books, it was necessary
+to manage these exceptions by replacing certain symbols. (eg: commas <!> CSV)
 
-Rencontrant des cas particuliers dans les titres de livres, il à été necessaire
-de gérer ces exceptions en remplaçant certains symboles. (eg: virgules <!> CSV)
+TREE:
+scrapBooking.py >>> general operation of the program and settings
+scrapBookingFuncions.py >>> repetitive routines passed as functions to call.
 
-ARBORESCENCE:
-scrapBooking.py >>> fonctionnement général du programme et paramétrages
-scrapBookingFuncions.py >>> routines répétitives passées sous forme de fonctions à appeler
-
-GENERATION DE DOSSIERS ET FICHIERS:
-dossier parent portant le nom de la catégorie
-    --> Dossier enfant nommé CSV
-        --> finchier.csv portant le nom de la catégorie
-    --> Dossier enfant nommé IMAGES
-        --> enregistrement des images au format JPG et renommées avec le titre du livre
+GENERATION OF FILES AND FILES:
+parent folder with the category name
+    -> Child folder named CSV
+        -> finchier.csv with the name of the category
+    -> Child folder named IMAGES
+        -> saving images in JPG format and renamed with the title of the book
 
 """
 
-########################################
-# Importations des modules nécessaires #
-########################################
+################################
+# Imports of necessary modules #
+################################
 import os
 import csv
 
-##########################################
-# Importation des fonctions personnelles #
-##########################################
+################################
+# Importing personal functions #
+################################
 
 from scrapBookingFunctions import create_folder
 from scrapBookingFunctions import scrap_links_of_categories
 from scrapBookingFunctions import scrap_links_of_books
 from scrapBookingFunctions import scrap_book_informations
 
-""" Dans un premier temps, il faut se connecter au site ciblé
+""" First, you have to connect to the targeted site.
 
-Un examen du code HTML permet de détecter l'utilisation d'URLs
-relative, nous aurons donc besoin d'une URL de base pour les
-reconstruire en URLs absolues des catégories et des page des produits
+An examination of the HTML code allows to detect the use of URLs
+relative, so we will need a base url for the
+rebuild categories and product pages into absolute URLs.
 """
+WEBSITE_URL = 'http://books.toscrape.com/index.html'
 
-websiteUrl = 'http://books.toscrape.com/index.html'
+# To reconstruct relative links into absolute links
+BASE_URL_CATEGORIES = 'http://books.toscrape.com/'
+BASE_URL_IMAGES = 'http://books.toscrape.com/'
+BASE_URL_BOOKS = 'http://books.toscrape.com/catalogue/'
 
-# To rebuild the relative links of categories
-baseUrlCategories = 'http://books.toscrape.com/'
-# To rebuild the relative links of books
-baseUrlBooks = 'http://books.toscrape.com/catalogue/'
+# Auto fill the list of category links
+links_of_categories = scrap_links_of_categories(
+                                WEBSITE_URL,
+                                BASE_URL_CATEGORIES)
 
-# Auto remplissage de la liste des liens de catégories
-linksOfCategories = scrap_links_of_categories(
-                                websiteUrl,
-                                baseUrlCategories)
-
-allBooksLinksList = []
-for oneCategory in linksOfCategories:
+all_books_links_list = []
+for one_category in links_of_categories:
     # Gestion du cas particuliers des catégories à plusieurs pages
-    provisionalLinksList = []
+    provisional_links_list = []
 
-    nextPage = 1
-    booksScraped = 0
-    categoryName = oneCategory[0].capitalize()
-    categoryLink = oneCategory[1]
-    expectedBooks = oneCategory[2]
-    nbPagesToScan = oneCategory[3]
+    next_page = 1
+    books_scraped = 0
+    category_name = one_category[0].capitalize()
+    category_link = one_category[1]
+    expected_books = one_category[2]
+    nb_pages_to_scan = one_category[3]
 
-    print(categoryName, "\n", categoryLink)
-    while nextPage <= nbPagesToScan:
+    print(category_name, "\n", category_link)
+    while next_page <= nb_pages_to_scan:
         
-        nbBooksToScan = expectedBooks - booksScraped
+        nb_pages_to_scan = expected_books - books_scraped
 
-        if nextPage == 2:
-            print(f"Page N°{nextPage}")
-            categoryLink = categoryLink.replace(
+        if next_page == 2:
+            print(f"Page N°{next_page}")
+            category_link = category_link.replace(
                 "index.html",
-                f"page-{nextPage}.html")
+                f"page-{next_page}.html")
 
-        elif nextPage > 2:
-            print(f"Page N°{nextPage}")
-            categoryLink = categoryLink.replace(
-                f"page-{nextPage-1}.html",
-                f"page-{nextPage}.html")
+        elif next_page > 2:
+            print(f"Page N°{next_page}")
+            category_link = category_link.replace(
+                f"page-{next_page-1}.html",
+                f"page-{next_page}.html")
 
-        scanPageInCourse = scrap_links_of_books(
-                                categoryLink,
-                                baseUrlBooks,
-                                nbBooksToScan)
+        scan_page_in_course = scrap_links_of_books(
+                                category_link,
+                                BASE_URL_BOOKS,
+                                nb_pages_to_scan)
 
-        for element in scanPageInCourse:
-            provisionalLinksList.append(element)
+        for element in scan_page_in_course:
+            provisional_links_list.append(element)
 
-        booksScraped += len(scanPageInCourse)
-        nextPage += 1
+        books_scraped += len(scan_page_in_course)
+        next_page += 1
     print(">>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<")
     # Retrieving all book links for the current category
-    allBooksLinksList.append((categoryName, provisionalLinksList))
+    all_books_links_list.append(
+        (
+            category_name,
+            provisional_links_list))
 
 
 """ A ce stade nous disposons d'une liste générale
@@ -125,46 +126,48 @@ Chaque sous-liste se présente sous forme d'un tuple,
 # Il s'agit maitenant d'éplucher notre liste, et de passer une
 # requête par lien de livre, et d'enregistrer le résultat avant de passer
 # à la catégorie suivante
-RootDir = os.path.dirname(os.path.abspath(__file__))
-fields=[
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
+FIELDS=[
     'Book Title','UPC Code','Product Type', 
     'Price (ExclTax)', 'Price (InclTax)', 'Taxes', 
     'Availability', 'number_of_reviews', 'nb_of_stars',
     'Image Url']
-countBooks = 0
-for linksOfBookInOneCategory in allBooksLinksList:
+count_books = 0
+for links_of_book_in_one_category in all_books_links_list:
 
-    categoryName = linksOfBookInOneCategory[0]
+    category_name = links_of_book_in_one_category[0]
 
-    CSVpath = f"{RootDir}\\SCRAPED_FILES\\{categoryName}\\CSV_FILES\\"
-    imagePath = f"{RootDir}\\SCRAPED_FILES\\{categoryName}\\IMAGES\\"
-    create_folder(CSVpath)
-    create_folder(imagePath)
+    CSV_PATH = f"{ROOT_DIR}\\SCRAPED_FILES\\{category_name}\\CSV_FILES\\"
+    IMAGE_PATH = f"{ROOT_DIR}\\SCRAPED_FILES\\{category_name}\\IMAGES\\"
+    create_folder(CSV_PATH)
+    create_folder(IMAGE_PATH)
 
-    listOfallBooksInfo = []
-    for bookLink in linksOfBookInOneCategory[1]:
-        countBooks += 1
-        print(countBooks)
+    list_of_all_books_info = []
+    for book_link in links_of_book_in_one_category[1]:
+        count_books += 1
+        print(count_books)
         # Retrieving information from the book
-        currentBookInfo = scrap_book_informations(bookLink, imagePath)
-        listOfallBooksInfo.append(list(currentBookInfo))
+        current_book_info = scrap_book_informations(book_link, IMAGE_PATH, BASE_URL_IMAGES)
+        list_of_all_books_info.append(current_book_info)
 
+    # WRITE name_of_category.CSV with auto-close
     with open(
-        f"{CSVpath}{categoryName}.csv",
+        f"{CSV_PATH}{category_name}.csv",
         'w',
         encoding="utf-8",
         newline=''
-        ) as csvfile:
-
+        ) as CSVfile:
+        # CSV configuration
         spamwriter = csv.writer(
-            csvfile,
+            CSVfile,
             delimiter=',',
             quotechar=' ',
             quoting=csv.QUOTE_MINIMAL
             )
-    
-        spamwriter.writerow(fields)
-        spamwriter.writerows(listOfallBooksInfo)
-        print("-------------------------")
-        print("ENREGISTRMENT CSV TERMINE")
-        print("-------------------------")
+        # One line
+        spamwriter.writerow(FIELDS)
+        # All others lines
+        spamwriter.writerows(list_of_all_books_info)
+        print("------------------------->")
+        print(f"ENREGISTRMENT CSV TERMINE {category_name}")
+        print("------------------------->")
