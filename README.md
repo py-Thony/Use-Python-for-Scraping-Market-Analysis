@@ -27,7 +27,9 @@ ___scrapBooking.py___
 _This script is responsible for scraping the site www.books.toscrape.com_
 <details>
   <summary>_Read More_</summary>
-  <p>This script is responsible for scraping the site www.books.toscrape.com
+  <p>
+  
+This script is responsible for scraping the site www.books.toscrape.com
 
 CONCEPTION:
 Step 1: Extraction of URLS from each category and listing.
@@ -62,37 +64,40 @@ parent folder with the category name
 </p>
 </details>
 
+
 ___scrapBookingFunctions.py___
 _This file groups together the functions created to manage the different routines of the main script_
 <details>
   <summary>_Read More_</summary>
-  <p>__scrap_links_of_categories__
-    Function used to retrieve the links of the categories.
+  <p>
 
-    __scrap_links_of_books__
-    Function used to retrieve the links of the books.
+__scrap_links_of_categories__
+Function used to retrieve the links of the categories.
 
-    __scrap_book_informations__
-    This function retrieves the following information:
-        - Book name
-        - UPC code
-        - Type of product
-        - Price (with and without tax, and tax only)
-        - The availability
-        - the number of comments
-        - the star rating
-        - the url of the image
-    And download the images.
+__scrap_links_of_books__
+Function used to retrieve the links of the books.
 
-    __scrap_and_save_book_image__
-    Function used to download the image of each book.
+__scrap_book_informations__
+This function retrieves the following information:
+    - Book name
+    - UPC code
+    - Type of product
+    - Price (with and without tax, and tax only)
+    - The availability
+    - the number of comments
+    - the star rating
+    - the url of the image
+And download the images.
 
-    __create_folder__
-    Function used only to manage
-    a possible error during file access, 
-    the path settings are deliberately 
-    processed in the same place as the calls 
-    for the sake of readability
+__scrap_and_save_book_image__
+Function used to download the image of each book.
+
+__create_folder__
+Function used only to manage
+a possible error during file access, 
+the path settings are deliberately 
+processed in the same place as the calls 
+for the sake of readability
 </p>
 </details>
 
