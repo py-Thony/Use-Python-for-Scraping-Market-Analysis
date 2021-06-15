@@ -24,7 +24,11 @@ ___A program (a scraper) developed in Python, capable of extracting price inform
 <br/>
 <br/>
 
-## Creation of the virtual environment
+# Before you start
+
+<br/>
+
+### Creation of the virtual environment
 Official python documentation:
     - [Python3 venv docs](https://docs.python.org/fr/3/library/venv.html "Documentation for creating and using a virtual environment to work free from version conflicts.")
 ```bash
@@ -148,5 +152,5 @@ _Once the textual information of all the books in the category is recovered, eve
 
 | Book  Title | UPC Code | Product Type | Price(ExclTax) | Price(InclTax) | Taxes | Availability | Number of reviews | nb of stars | Image Url |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| It's  Only  the  Himalayas  | a22124811bfa8350 | Books | £45.17 | £45.17 | £0.00 | In  stock  (19  available)  | 0 | Two | http://books.toscrape.com/media/.../.../foo.jpg |
-| Under  the  Tuscan  Sun | a94350ee74deaa07 | Books | £37.33 | £37.33 | £0.00 | In  stock  (7  available) | 0 | Two | http://books.toscrape.com/media/.../.../foo.jpg |
+| It's  Only  the  Himalayas  | a22124811bfa8350 | Books | £45.17 | £45.17 | £0.00 | In  stock  (19  available)  | 17 | Two | http://books.toscrape.com/media/.../.../foo.jpg |
+| Under  the  Tuscan  Sun | a94350ee74deaa07 | Books | £37.33 | £37.33 | £0.00 | In  stock  (7  available) | 5 | Four | http://books.toscrape.com/media/.../.../foo.jpg |
