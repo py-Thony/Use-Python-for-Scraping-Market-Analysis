@@ -224,6 +224,9 @@ def scrap_book_informations(link_of_book, IMAGE_PATH, BASE_URL_IMAGES):
     return current_book_info
 
 def scrap_and_save_book_image(IMAGE_PATH, image_url, name_of_book):
+    """ Function used to download
+        the image of each book.
+    """
     # Parsing
     response_image = requests.get(image_url)
     # Name normalization
