@@ -9,7 +9,8 @@
 
 <div align="center">
 
-___books.toscrape.com___
+___Scraping of books.toscrape.com___
+by [py-Thony](https://github.com/py-Thony "Click to access my GitHub profile and discover my other projects.")
 
 </div>
 
@@ -145,9 +146,9 @@ for the sake of readability
 
 ___Just start scrapBooking.py !___ _and Enjoy !!_
 
-___The work will be done by itself!
+___The work will be done by itself! And scrap the 1000 books!___
 
-All you have to do is have a coffee, the operation lasts about___
+___All you have to do is have a coffee, the operation lasts about 15 minutes___
 
 <br/>
 
@@ -175,6 +176,7 @@ _The program may stop working if the site's HTML tags are renamed._
 _In this case you will have to update them and either propose a PullRequest_
 _or leave me a comment so that I can correct the problem._
 
+</br>
 
 <div align="center">
 
