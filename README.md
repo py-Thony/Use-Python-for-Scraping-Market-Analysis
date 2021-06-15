@@ -141,6 +141,12 @@ for the sake of readability
 
 <br/>
 
+# How do I scrape the entire books.toscrape.com?
+
+___Just start scrapBooking.py !___ _and Enjoy !!_
+
+<br/>
+
 # Presentation of the results obtained
 
 ### Result in CSV
