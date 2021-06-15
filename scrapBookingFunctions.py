@@ -39,8 +39,8 @@ def scrap_links_of_categories(WEBSITE_URL, BASE_URL_CATEGORIES):
 
 
     for link in categories_soup:
-        # (Start at 3, 49 categories == 51 links, stop at 52)
-        while link_incrementation < 52:
+        # (Start at 3, 50 categories == 52 links, stop at 53)
+        while link_incrementation < 53:
             # Looking for all the anchors 'a' one by one
             link= categories_soup.find_all('a')[link_incrementation]
             # Specify search by targeting 'href' to target the url
