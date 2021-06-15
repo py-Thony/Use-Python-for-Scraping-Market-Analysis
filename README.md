@@ -143,6 +143,6 @@ for the sake of readability
 
 ### Result in CSV
 
-Book  Title | UPC Code | Product Type | Price(ExclTax) | Price(InclTax) | Taxes | Availability | Number of reviews | nb of stars | Image Url 
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---:
-It's  Only  the  Himalayas  | a22124811bfa8350 | Books | £45.17 | £45.17 | £0.00 | In  stock  (19  available)  | 0 | Two | http://books.toscrape.com/media/.../.../foo.jpg
+| Book  Title | UPC Code | Product Type | Price(ExclTax) | Price(InclTax) | Taxes | Availability | Number of reviews | nb of stars | Image Url |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| It's  Only  the  Himalayas  | a22124811bfa8350 | Books | £45.17 | £45.17 | £0.00 | In  stock  (19  available)  | 0 | Two | http://books.toscrape.com/media/.../.../foo.jpg |
