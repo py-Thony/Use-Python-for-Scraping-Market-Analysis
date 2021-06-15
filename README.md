@@ -156,7 +156,4 @@ _Once the textual information of all the books in the category is recovered, eve
 
 _While running, the script creates a tree like this:_
 
-<p align="center">
-  <img width="200" src="https://github.com/py-Thony/Use-Python-for-Scraping-Market-Analysis/blob/master/Livrables/tree.JPG
-" alt="Material Bread logo">
-</p>
+![alt text](https://github.com/py-Thony/Use-Python-for-Scraping-Market-Analysis/blob/master/Livrables/tree.JPG?raw=true)
