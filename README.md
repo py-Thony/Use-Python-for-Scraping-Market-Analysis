@@ -145,6 +145,10 @@ for the sake of readability
 
 ___Just start scrapBooking.py !___ _and Enjoy !!_
 
+___The work will be done by itself!
+
+All you have to do is have a coffee, the operation lasts about___
+
 <br/>
 
 # Presentation of the results obtained
@@ -166,8 +170,6 @@ _While running, the script creates a tree like this:_
 
 
 <div align="center">
-
-
 
 #### :snake:If you are forking please do not forget to star the repo:snake:
 

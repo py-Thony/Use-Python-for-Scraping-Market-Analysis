@@ -193,9 +193,9 @@ def scrap_book_informations(link_of_book, IMAGE_PATH, BASE_URL_IMAGES):
             number_of_reviews = balise.find('td')
 
     # The star rating is contained elsewhere
-    star_rating = page_soup.find('article', {'class':'product_pod'}).find('p')
+    star_rating = page_soup.find('div', {'class':'col-sm-6 product_main'}).findAll('p')
     # Split of 'p tag' and split result to obtain needed value
-    nb_of_stars = str(star_rating).split('"')[1].split(' ')[1]
+    nb_of_stars = str(star_rating[2]).split('"')[1].split(' ')[1]
 
 
     image_url = page_soup.find("div", {"class": "item active"}).find("img")
