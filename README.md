@@ -13,7 +13,7 @@ ___A program (a scraper) developed in Python, capable of extracting price inform
 </div>
 
 _Horizontal line :_
-====
+- - - -
 
 ## Creation of the virtual environment
 Official python documentation:
