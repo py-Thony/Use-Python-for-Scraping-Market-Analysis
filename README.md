@@ -147,8 +147,16 @@ for the sake of readability
 
 _Once the textual information of all the books in the category is recovered, everything is saved in a.csv file as below:_
 
-
 | Book  Title | UPC Code | Product Type | Price(ExclTax) | Price(InclTax) | Taxes | Availability | Number of reviews | nb of stars | Image Url |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | It's  Only  the  Himalayas  | a22124811bfa8350 | Books | £45.17 | £45.17 | £0.00 | In  stock  (19  available)  | 17 | Two | http://books.toscrape.com/media/.../.../foo.jpg |
 | Under  the  Tuscan  Sun | a94350ee74deaa07 | Books | £37.33 | £37.33 | £0.00 | In  stock  (7  available) | 5 | Four | http://books.toscrape.com/media/.../.../foo.jpg |
+
+### Tree structure
+
+_While running, the script creates a tree like this:_
+
+<p align="center">
+  <img width="200" src="https://github.com/py-Thony/Use-Python-for-Scraping-Market-Analysis/blob/master/Livrables/tree.JPG
+" alt="Material Bread logo">
+</p>
