@@ -141,7 +141,7 @@ for the sake of readability
 
 <br/>
 
-# Demonstration
+# Presentation of the results obtained
 
 ### Result in CSV
 
@@ -157,3 +157,12 @@ _Once the textual information of all the books in the category is recovered, eve
 _While running, the script creates a tree like this:_
 
 ![alt text](https://github.com/py-Thony/Use-Python-for-Scraping-Market-Analysis/blob/master/Livrables/tree.JPG?raw=true)
+
+
+<div align="center">
+
+
+
+#### :snake:If you are forking please do not forget to star the repo:snake:
+
+</br>
