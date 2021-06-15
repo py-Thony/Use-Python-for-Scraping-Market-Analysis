@@ -12,8 +12,7 @@
 ___A program (a scraper) developed in Python, capable of extracting price information from other online bookstores.___
 </div>
 
-_Horizontal line :_
-- - - -
+====
 
 ## Creation of the virtual environment
 Official python documentation:
