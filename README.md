@@ -9,14 +9,17 @@
 
 <div align="center">
 
+## Books to Scrape
+
+</div>
 ---
+
+<div align="center">
 
 ___A program (a scraper) developed in Python, capable of extracting price information from other online bookstores.___
 </div>
 
 ---
-<br/>
-<br/>
 <br/>
 <br/>
 
