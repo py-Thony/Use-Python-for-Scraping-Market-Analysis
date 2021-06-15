@@ -9,6 +9,8 @@
 
 <div align="center">
 
+---
+
 ___A program (a scraper) developed in Python, capable of extracting price information from other online bookstores.___
 </div>
 
