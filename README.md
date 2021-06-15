@@ -12,6 +12,7 @@
 ## Books to Scrape
 
 </div>
+
 ---
 
 <div align="center">
