@@ -15,7 +15,10 @@ ___A program (a scraper) developed in Python, capable of extracting price inform
 </div>
 
 ---
-
+<br/>
+<br/>
+<br/>
+<br/>
 
 
 
