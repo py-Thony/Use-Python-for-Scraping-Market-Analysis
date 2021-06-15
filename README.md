@@ -39,7 +39,7 @@ VScode specific documentation:
 python -m venv .venv
 ```
 
-### requirements.txt
+### Installation of libraries
 _A requirements.txt file allows you to find out the list of libraries necessary for the proper functioning of the program._
 
 __To start the installation automatically:__
