@@ -169,6 +169,13 @@ _While running, the script creates a tree like this:_
 ![alt text](https://github.com/py-Thony/Use-Python-for-Scraping-Market-Analysis/blob/master/Livrables/tree.JPG?raw=true)
 
 
+# Potential malfunction
+
+_The program may stop working if the site's HTML tags are renamed._
+_In this case you will have to update them and either propose a PullRequest_
+_or leave me a comment so that I can correct the problem._
+
+
 <div align="center">
 
 #### :snake:If you are forking please do not forget to star the repo:snake:
