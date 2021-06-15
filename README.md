@@ -17,7 +17,7 @@ ___books.toscrape.com___
 
 <div align="center">
 
-___A program (a scraper) developed in Python, capable of extracting price information from other online bookstores.___
+___A program (a scraper) developed in Python, capable of extracting price information and download images.___
 </div>
 
 ---
