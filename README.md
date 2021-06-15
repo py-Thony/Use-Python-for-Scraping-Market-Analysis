@@ -23,13 +23,15 @@ ___A program (a scraper) developed in Python, capable of extracting price inform
 ## Creation of the virtual environment
 Official python documentation:
     - [Python3 venv docs](https://docs.python.org/fr/3/library/venv.html "Documentation for creating and using a virtual environment to work free from version conflicts.")
-
->python3 -m venv /path/to/new/virtual/environment
+```bash
+python3 -m venv /path/to/new/virtual/environment
+```
 
 VScode specific documentation:
     - [VScode venv docs](https://code.visualstudio.com/docs/python/environments "Documentation for creating and using a virtual environment to work free from version conflicts.")
-
->python -m venv .venv
+```bash
+python -m venv .venv
+```
 
 ## requirements.txt
 _A requirements.txt file allows you to find out the list of libraries necessary for the proper functioning of the program._
