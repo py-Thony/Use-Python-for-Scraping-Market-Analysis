@@ -57,7 +57,7 @@ The program consists of 2 files:
 
 :one:___scrapBooking.py___
 
-_This script is responsible for scraping the site www.books.toscrape.com_
+_This script is responsible for scraping the site http://books.toscrape.com/_
 <details>
   <summary>_Read More_</summary>
   <p>
