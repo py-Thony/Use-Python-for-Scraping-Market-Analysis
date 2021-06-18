@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-""" This file groups together the functions created 
+""" This file groups together the functions created
 to manage the different routines of the main script
 
 For the sake of maintaining the version of the comments,
@@ -19,7 +19,7 @@ from math import ceil
 
 def scrap_links_of_categories(WEBSITE_URL, BASE_URL_CATEGORIES):
     """
-    Function used to retrieve the links of the categories 
+    Function used to retrieve the links of the categories
     and return a list containing these links.
 
     This function performs the following tasks:
@@ -27,26 +27,27 @@ def scrap_links_of_categories(WEBSITE_URL, BASE_URL_CATEGORIES):
         - Parsing of the result obtained
         - Selection of targeted tags
         - Converting relative URLs to absolute
-        - Returns the list of tuples containing 
+        - Returns the list of tuples containing
           the name of the category and its link
     """
 
     response_categories = requests.get(WEBSITE_URL)
     categories_soup = Soup(response_categories.text, "html.parser")
-    links_of_categories = [] 
-    link_incrementation = 3 # 1st link != 1st position
+    links_of_categories = []
+    # 1st link != 1st position
+    link_incrementation = 3
     PAGINATION_MAX = 20
-
 
     for link in categories_soup:
         # (Start at 3, 50 categories == 52 links, stop at 53)
         while link_incrementation < 53:
             # Looking for all the anchors 'a' one by one
-            link= categories_soup.find_all('a')[link_incrementation]
+            link = categories_soup.find_all('a')[link_incrementation]
             # Specify search by targeting 'href' to target the url
             link = link['href']
             # Extraction of the category name
             category_name = str(link).split("/")[-2].split("_")[-2]
+            # Absolute URL reconstruction
             category_link = BASE_URL_CATEGORIES + link
             # Requests and parsing HTML
             response_one_category = requests.get(category_link)
@@ -72,26 +73,25 @@ def scrap_links_of_categories(WEBSITE_URL, BASE_URL_CATEGORIES):
                 "\n")
             
             # Save
-            links_of_categories.append(
-                                (
-                                    category_name,
-                                    category_link, 
-                                    number_expected_results,
-                                    number_of_pages
-                                )
-                                    )
+            links_of_categories.append((
+                category_name,
+                category_link,
+                number_expected_results,
+                number_of_pages))
 
             link_incrementation += 1
    
     return links_of_categories
 
+
 def scrap_links_of_books(category_link, BASE_URL_BOOKS, nb_books_to_scan):
+
     if nb_books_to_scan >= 20:
         nb_books_to_scan = 20
 
-    """Function used to retrieve the links of the books 
+    """Function used to retrieve the links of the books
     and return a list containing these  links.
-    
+
     This function performs the following tasks:
         - Querying the URL of each link received as a parameter
         - Parsing of the result obtained
@@ -108,11 +108,12 @@ def scrap_links_of_books(category_link, BASE_URL_BOOKS, nb_books_to_scan):
 
     for book_link in soup_category:
         # Selection of the link targeted by incrementation
-        while books_iteration_in_page < nb_books_to_scan :
-            book_link_large = \
-                soup_category.find_all(
-                    "li", {"class": "col-xs-6 col-sm-4 col-md-3 col-lg-3"}
-                                )[books_iteration_in_page]
+        while books_iteration_in_page < nb_books_to_scan:
+            book_link_large = soup_category.find_all(
+                "li",
+                {
+                    "class": "col-xs-6 col-sm-4 col-md-3 col-lg-3"
+                })[books_iteration_in_page]
 
             # Specify search by targeting 'a' (href link)
             book_link_medium = book_link_large.find('a')
@@ -130,11 +131,12 @@ def scrap_links_of_books(category_link, BASE_URL_BOOKS, nb_books_to_scan):
         
     return book_links_in_one_page
 
+
 def scrap_book_informations(link_of_book, IMAGE_PATH, BASE_URL_IMAGES):
     """ This function retrieves the following information:
         - Book name
         - UPC code
-        - Type of product
+        - Description of Book
         - Price (with and without tax, and tax only)
         - The availability
         - the number of comments
@@ -148,9 +150,9 @@ def scrap_book_informations(link_of_book, IMAGE_PATH, BASE_URL_IMAGES):
         the function automatically calls the function
         allowing to download it during peeling.
     """
-    # Defining a constant containing unwanted characters 
+    # Defining a constant containing unwanted characters
     # avoids stacking '.replace ()'
-    SPECIAL_CHARS = "!@#$%^&\"*[];,./<>?\|~-=_+"
+    SPECIAL_CHARS = '!@#$%^&"*[];,./<>?\~-=_+'
 
     # Requests and parsing HTML
     my_url = link_of_book
@@ -179,8 +181,6 @@ def scrap_book_informations(link_of_book, IMAGE_PATH, BASE_URL_IMAGES):
         # (Tag name ('th') and value ('td'))
         if 'UPC' in balise.find('th'):
             upc = balise.find('td')
-        if 'Product Type' in balise.find('th'):
-            product_type = balise.find('td')
         if 'Price (excl. tax)' in balise.find('th'):
             price_excl_tax = balise.find('td')
         if 'Price (incl. tax)' in balise.find('th'):
@@ -193,35 +193,45 @@ def scrap_book_informations(link_of_book, IMAGE_PATH, BASE_URL_IMAGES):
             number_of_reviews = balise.find('td')
 
     # The star rating is contained elsewhere
-    star_rating = page_soup.find('div', {'class':'col-sm-6 product_main'}).findAll('p')
+    star_rating = page_soup.find(
+        'div', {'class': 'col-sm-6 product_main'}).findAll('p')
     # Split of 'p tag' and split result to obtain needed value
     nb_of_stars = str(star_rating[2]).split('"')[1].split(' ')[1]
 
+    product_description = page_soup.find_all('p')[3].text
+
+    BANNED_CHARS = 'âÂ@#$%^&"*[];,/<>\~-=_+'
+    for replaced_char in BANNED_CHARS:
+        product_description = product_description.replace(replaced_char, "")
+
+    product_description = product_description[:-8]
+    ' '.join(product_description.split())
 
     image_url = page_soup.find("div", {"class": "item active"}).find("img")
     trunq = str(image_url).split('"')
     # We get: ../../../media/cache/foo/bar/img.jpg (trunq[3])
     save = str(trunq[3]).split('../')
     image_url = BASE_URL_IMAGES + save[2]
-
-    current_book_info = (f"{name_of_book}",
-    f"{upc.text}",
-    f"{product_type.text}",
-    f"{price_excl_tax.text.replace('Â£', '£')}",
-    f"{price_incl_tax.text.replace('Â£', '£')}",
-    f"{taxes.text.replace('Â£', '£')}",
-    f"{availability.text}",
-    f"{number_of_reviews.text}",
-    nb_of_stars,
-    image_url)
+    current_book_info = (
+        f"{name_of_book}",
+        f"{upc.text}",
+        f"{product_description}",
+        f"{price_excl_tax.text.replace('Â£', '£')}",
+        f"{price_incl_tax.text.replace('Â£', '£')}",
+        f"{taxes.text.replace('Â£', '£')}",
+        f"{availability.text}",
+        f"{number_of_reviews.text}",
+        nb_of_stars,
+        image_url)
     print("Informations récupérées")
     scrap_and_save_book_image(
-                            IMAGE_PATH,
-                            image_url,
-                            name_of_book)
+        IMAGE_PATH,
+        image_url,
+        name_of_book)
     print("Image téléchargée")
 
     return current_book_info
+
 
 def scrap_and_save_book_image(IMAGE_PATH, image_url, name_of_book):
     """ Function used to download
@@ -237,14 +247,15 @@ def scrap_and_save_book_image(IMAGE_PATH, image_url, name_of_book):
         # contents refers to Binary Response content
         image_book.write(response_image.content)
 
+
 def create_folder(PATH):
     """ Function used only to manage
-    a possible error during file access, 
-    the path settings are deliberately 
-    processed in the same place as the calls 
+    a possible error during file access,
+    the path settings are deliberately
+    processed in the same place as the calls
     for the sake of readability
     """
-    try: 
+    try:
         # Create folderS (Entire tree)
         os.makedirs(PATH)
         return True
