@@ -12,10 +12,12 @@ Step 2: Peel this list to scrape all book links
 Step 3: Query each book link to:
                     - Extraction of textual information
                     - Download the image of the book
-Step 3bis: Creation of self-named parent files according to the name of the category,
-            Creation of 'CSV' and 'IMAGES' child folders
-            Saving text data to a CSV file in the CSV folder
-            Saving images renamed with the title of the book in the IMAGES folder
+Step 3bis:  - Creation of self-named parent files according
+            to the name of the category,
+            - Creation of 'CSV' and 'IMAGES' child folders
+            - Saving text data to a CSV file in the CSV folder
+            - Saving images renamed with the title of the book
+            in the IMAGES folder
 
 Having problems controlling where to create folders,
 (under Windows 10 machine, VScode) it was necessary to create a function.
@@ -33,7 +35,6 @@ parent folder with the category name
         -> file.csv with the name of the category
     -> Child folder named IMAGES
         -> saving images in JPG format and renamed with the title of the book
-
 """
 
 ################################
@@ -66,8 +67,8 @@ BASE_URL_BOOKS = 'http://books.toscrape.com/catalogue/'
 
 # Auto fill the list of category links
 links_of_categories = scrap_links_of_categories(
-                                WEBSITE_URL,
-                                BASE_URL_CATEGORIES)
+    WEBSITE_URL,
+    BASE_URL_CATEGORIES)
 
 all_books_links_list = []
 for one_category in links_of_categories:
@@ -99,9 +100,9 @@ for one_category in links_of_categories:
                 f"page-{next_page}.html")
 
         scan_page_in_course = scrap_links_of_books(
-                                category_link,
-                                BASE_URL_BOOKS,
-                                nb_pages_to_scan)
+            category_link,
+            BASE_URL_BOOKS,
+            nb_pages_to_scan)
 
         for element in scan_page_in_course:
             provisional_links_list.append(element)
@@ -122,9 +123,9 @@ Each sublist is in the form of a tuple,
 (catName, (booksListen))
 """
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-FIELDS=[
-    'Book Title','UPC Code','Product Type', 
-    'Price (ExclTax)', 'Price (InclTax)', 'Taxes', 
+FIELDS = [
+    'Book Title', 'UPC Code', 'Product Description',
+    'Price (ExclTax)', 'Price (InclTax)', 'Taxes',
     'Availability', 'number_of_reviews', 'nb_of_stars',
     'Image Url']
 count_books = 0
@@ -132,34 +133,37 @@ for links_of_book_in_one_category in all_books_links_list:
 
     category_name = links_of_book_in_one_category[0]
 
+    # Same place = better maintenance in the event of modifications.
     CSV_PATH = f"{ROOT_DIR}\\SCRAPED_FILES\\{category_name}\\CSV_FILES\\"
     IMAGE_PATH = f"{ROOT_DIR}\\SCRAPED_FILES\\{category_name}\\IMAGES\\"
     create_folder(CSV_PATH)
     create_folder(IMAGE_PATH)
 
+    # It is from here that the recovery of information and images begins
     list_of_all_books_info = []
     for book_link in links_of_book_in_one_category[1]:
         count_books += 1
         print(count_books)
-        # Retrieving information from the book
-        current_book_info = scrap_book_informations(book_link, IMAGE_PATH, BASE_URL_IMAGES)
+        # Retrieving image in the same time
+        current_book_info = scrap_book_informations(
+            book_link,
+            IMAGE_PATH,
+            BASE_URL_IMAGES)
         list_of_all_books_info.append(current_book_info)
 
     # WRITE name_of_category.CSV with auto-close
     with open(
         f"{CSV_PATH}{category_name}.csv",
         'w',
-        encoding="utf-8",
-        newline=''
-        ) as CSVfile:
+        encoding="UTF-8",
+            newline='') as CSVfile:
         # CSV configuration
         spamwriter = csv.writer(
             CSVfile,
             delimiter=',',
             quotechar=' ',
-            quoting=csv.QUOTE_MINIMAL
-            )
-        # One line
+            quoting=csv.QUOTE_MINIMAL)
+        # First line
         spamwriter.writerow(FIELDS)
         # All others lines
         spamwriter.writerows(list_of_all_books_info)
