@@ -172,7 +172,7 @@ _Once the textual information of all the books in the category is recovered, eve
 
 
 | Book  Title | UPC  Code | Product  Description | Price  (ExclTax) | Price  (InclTax) | Taxes |Availability | Reviews_rating | Image  Url |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | It's  Only  the  Himalayas | a22124811bfa8350 | Wherever  you  go  whatever  you  do  just  .  .  .  don't  do  anything  stupid....[Shortcut for easy readability] | £45.17 | £45.17 | £0.00 | In  stock  (19  available) | Two | http://books.toscrape.com/media/cache/6d/41/6d418a73cc7d4ecfd75ca11d854041db.jpg |
 | Full  Moon  over  Noah's  Ark:  An  Odyssey  to  Mount  Ararat  and  Beyond | ce60436f52c5ee68 | Acclaimed  travel  writer  Rick  Antonson...[Shortcut for easy readability] | £49.43 | £49.43 | £0.00 | In  stock  (15  available) | Four | http://books.toscrape.com/media/cache/fe/8a/fe8af6ceec7718986380c0fde9b3b34f.jpg |
 | See  America:  A  Celebration  of  Our  National  Parks  Treasured  Sites | f9705c362f070608 | To  coincide  with  the  2016  centennial...[Shortcut for easy readability] | £48.87 | £48.87 | £0.00 | In  stock  (14  available) | Three |http://books.toscrape.com/media/cache/c7/1a/c71a85dbf8c2dbc75cb271026618477c.jpg |
