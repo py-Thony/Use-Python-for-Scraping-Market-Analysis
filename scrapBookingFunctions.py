@@ -189,14 +189,12 @@ def scrap_book_informations(link_of_book, IMAGE_PATH, BASE_URL_IMAGES):
             taxes = balise.find('td')
         if 'Availability' in balise.find('th'):
             availability = balise.find('td')
-        if 'Number of reviews' in balise.find('th'):
-            number_of_reviews = balise.find('td')
 
     # The star rating is contained elsewhere
     star_rating = page_soup.find(
         'div', {'class': 'col-sm-6 product_main'}).findAll('p')
     # Split of 'p tag' and split result to obtain needed value
-    nb_of_stars = str(star_rating[2]).split('"')[1].split(' ')[1]
+    reviews_rating = str(star_rating[2]).split('"')[1].split(' ')[1]
 
     product_description = page_soup.find_all('p')[3].text
 
@@ -208,11 +206,13 @@ def scrap_book_informations(link_of_book, IMAGE_PATH, BASE_URL_IMAGES):
     ' '.join(product_description.split())
 
     image_url = page_soup.find("div", {"class": "item active"}).find("img")
+
     trunq = str(image_url).split('"')
     # We get: ../../../media/cache/foo/bar/img.jpg (trunq[3])
     save = str(trunq[3]).split('../')
     # Absolute URL reconstruction
-    image_url = BASE_URL_IMAGES + link_of_book[2]
+    image_url = BASE_URL_IMAGES + save[2]
+
     current_book_info = (
         f"{name_of_book}",
         f"{upc.text}",
@@ -221,10 +221,10 @@ def scrap_book_informations(link_of_book, IMAGE_PATH, BASE_URL_IMAGES):
         f"{price_incl_tax.text.replace('Â£', '£')}",
         f"{taxes.text.replace('Â£', '£')}",
         f"{availability.text}",
-        f"{number_of_reviews.text}",
-        nb_of_stars,
+        reviews_rating,
         image_url)
     print("Informations récupérées")
+
     scrap_and_save_book_image(
         IMAGE_PATH,
         image_url,
