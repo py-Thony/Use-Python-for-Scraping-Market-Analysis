@@ -171,7 +171,7 @@ _Once the textual information of all the books in the category is recovered, eve
 
 _While running, the script creates a tree like this:_
 
-![alt text](https://github.com/py-Thony/Use-Python-for-Scraping-Market-Analysis/blob/master/Livrables/tree.JPG?raw=true)
+![alt text](https://github.com/py-Thony/Use-Python-for-Scraping-Market-Analysis/blob/master/Livrables/Images%20Readme/tree.JPG?raw=true)
 
 
 # Potential malfunction
