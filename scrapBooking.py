@@ -125,7 +125,7 @@ ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 FIELDS = [
     'Book Title', 'UPC Code', 'Product Description',
     'Price (ExclTax)', 'Price (InclTax)', 'Taxes',
-    'Availability', 'number_of_reviews', 'nb_of_stars',
+    'Availability', 'Reviews_rating',
     'Image Url']
 count_books = 0
 for links_of_book_in_one_category in all_books_links_list:
