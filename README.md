@@ -27,6 +27,11 @@ ___A program (a scraper) developed in Python, capable of extracting price inform
 
 # Before you start
 
+### Clone the repository
+```bash
+git clone https://github.com/py-Thony/Use-Python-for-Scraping-Market-Analysis
+```
+
 ### Creation of the virtual environment
 Official python documentation:
     - [Python3 venv docs](https://docs.python.org/fr/3/library/venv.html "Documentation for creating and using a virtual environment to work free from version conflicts.")
@@ -53,6 +58,13 @@ pip install -r requirements.txt
 <br/>
 
 # Description of the program
+
+### To start the program
+```bash
+# Use py, python, or python3 according to your configuration
+py scrapBooking.py
+```
+
 The program consists of 2 files:
 
 :one:___scrapBooking.py___
@@ -159,12 +171,12 @@ ___All you have to do is have a coffee, the operation lasts about 15 minutes___
 _Once the textual information of all the books in the category is recovered, everything is saved in a.csv file as below:_
 
 
-| Book  Title | UPC  Code | Product  Description | Price  (ExclTax) | Price  (InclTax) | Taxes |Availability | number_of_reviews | nb_of_stars | Image  Url |
+| Book  Title | UPC  Code | Product  Description | Price  (ExclTax) | Price  (InclTax) | Taxes |Availability | Reviews_rating | Image  Url |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| It's  Only  the  Himalayas | a22124811bfa8350 | Wherever  you  go  whatever  you  do  just  .  .  .  don't  do  anything  stupid....[Shortcut for easy readability] | £45.17 | £45.17 | £0.00 | In  stock  (19  available) | 0 | Two | http://books.toscrape.com/media/cache/6d/41/6d418a73cc7d4ecfd75ca11d854041db.jpg |
-| Full  Moon  over  Noah's  Ark:  An  Odyssey  to  Mount  Ararat  and  Beyond | ce60436f52c5ee68 | Acclaimed  travel  writer  Rick  Antonson...[Shortcut for easy readability] | £49.43 | £49.43 | £0.00 | In  stock  (15  available) | 0 |Four | http://books.toscrape.com/media/cache/fe/8a/fe8af6ceec7718986380c0fde9b3b34f.jpg |
-| See  America:  A  Celebration  of  Our  National  Parks  Treasured  Sites | f9705c362f070608 | To  coincide  with  the  2016  centennial...[Shortcut for easy readability] | £48.87 | £48.87 | £0.00 | In  stock  (14  available) | 0 | Three |http://books.toscrape.com/media/cache/c7/1a/c71a85dbf8c2dbc75cb271026618477c.jpg |
-| Vagabonding:  An  Uncommon  Guide  to  the  Art  of  Long  Term  World  Travel | 1809259a5a5f1d8d | With  a  new  foreword...[Shortcut for easy readability] | £36.94 | £36.94 | £0.00 | In  stock  (8  available) | 0 | Two | http://books.toscrape.com/media/cache/ca/30/ca30b1afe1e76ce7ba1db8176d398e53.jpg |
+| It's  Only  the  Himalayas | a22124811bfa8350 | Wherever  you  go  whatever  you  do  just  .  .  .  don't  do  anything  stupid....[Shortcut for easy readability] | £45.17 | £45.17 | £0.00 | In  stock  (19  available) | Two | http://books.toscrape.com/media/cache/6d/41/6d418a73cc7d4ecfd75ca11d854041db.jpg |
+| Full  Moon  over  Noah's  Ark:  An  Odyssey  to  Mount  Ararat  and  Beyond | ce60436f52c5ee68 | Acclaimed  travel  writer  Rick  Antonson...[Shortcut for easy readability] | £49.43 | £49.43 | £0.00 | In  stock  (15  available) | Four | http://books.toscrape.com/media/cache/fe/8a/fe8af6ceec7718986380c0fde9b3b34f.jpg |
+| See  America:  A  Celebration  of  Our  National  Parks  Treasured  Sites | f9705c362f070608 | To  coincide  with  the  2016  centennial...[Shortcut for easy readability] | £48.87 | £48.87 | £0.00 | In  stock  (14  available) | Three |http://books.toscrape.com/media/cache/c7/1a/c71a85dbf8c2dbc75cb271026618477c.jpg |
+| Vagabonding:  An  Uncommon  Guide  to  the  Art  of  Long  Term  World  Travel | 1809259a5a5f1d8d | With  a  new  foreword...[Shortcut for easy readability] | £36.94 | £36.94 | £0.00 | In  stock  (8  available) | Two | http://books.toscrape.com/media/cache/ca/30/ca30b1afe1e76ce7ba1db8176d398e53.jpg |
 
 
 ### Tree structure
