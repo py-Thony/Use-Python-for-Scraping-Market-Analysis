@@ -74,7 +74,6 @@ all_books_links_list = []
 for one_category in links_of_categories:
     # Management of the special case of categories with several pages
     provisional_links_list = []
-
     next_page = 1
     books_scraped = 0
     category_name = one_category[0].capitalize()

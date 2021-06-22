@@ -211,7 +211,8 @@ def scrap_book_informations(link_of_book, IMAGE_PATH, BASE_URL_IMAGES):
     trunq = str(image_url).split('"')
     # We get: ../../../media/cache/foo/bar/img.jpg (trunq[3])
     save = str(trunq[3]).split('../')
-    image_url = BASE_URL_IMAGES + save[2]
+    # Absolute URL reconstruction
+    image_url = BASE_URL_IMAGES + link_of_book[2]
     current_book_info = (
         f"{name_of_book}",
         f"{upc.text}",
