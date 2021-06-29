@@ -4,7 +4,7 @@
 </div>
 
 <p align="center">
-  <img width="200" src="https://user.oc-static.com/upload/2020/09/22/1600779540759_Online%20bookstore-01.png" alt="Material Bread logo">
+  <img width="236" src="https://user.oc-static.com/upload/2020/09/22/1600779540759_Online%20bookstore-01.png" alt="Material Bread logo">
 </p>
 
 <div align="center">
