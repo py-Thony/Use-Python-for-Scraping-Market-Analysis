@@ -60,8 +60,10 @@ pip install -r requirements.txt
 # Description of the program
 
 ### To start the program
+
+:warning: ___This program only works with python3___ :warning:
 ```bash
-# Use py, python, or python3 according to your configuration
+# Use py or python command
 py scrapBooking.py
 ```
 
